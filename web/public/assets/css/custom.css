@@ -1,0 +1,116 @@
+.hide {
+	display: none;
+}
+
+.btn-toggle-without-icon:after {
+    display: none !important;
+}
+
+.select-img:hover {
+	border: 2px solid #145388;
+	cursor: pointer;
+}
+
+input[type="color" i] {
+	height: 40px;
+	display: block;
+	width: 100%;
+	background-color: #d7d7d7;
+	border: none;
+}
+
+.fc-time-grid-event .fc-content {
+    font-weight: 700 !important;
+    font-size: 12px !important;
+}
+
+.fc-event {
+    border-radius: 0px !important;
+    border-bottom: 2px solid #fff;
+}
+
+.p-1rem {
+	padding: 1rem !important;
+}
+
+.br-0 {
+	border-radius: 0px;
+}
+
+.bg-pink-gradiant-custom {
+	/*background-image: linear-gradient(-180deg, #f34572 0%, #d20d42 100%);*/
+	background-image: linear-gradient(-180deg, #f57497 0%, #f11f57 100%);
+	/*background-image: linear-gradient(-180deg, #fcd65a 0%, #fab538 100%);*/
+	/*box-shadow: 0 6px 34px 0 #fbc4d3;*/
+}
+
+.bg-blue-gradiant-custom {
+	background-image: linear-gradient(-180deg, #5165F5 0%, #0E2397 100%);
+	/*background-image: linear-gradient(-180deg, #c5d5f1 0%, #627cae 100%);*/
+	/*box-shadow: 0 6px 34px 0 #A8B1F1;*/
+}
+
+.pointer-cursor {
+	cursor: pointer;
+}
+
+.grad-blue {
+    background-image: linear-gradient(45deg,#00aeff 50%,#3369e6);
+}
+
+.grad-green {
+    background-image: linear-gradient(284deg,#1cc7d0,#2dde98);
+}
+
+.grad-black {
+    background-image: linear-gradient(45deg,#3e396b 50%,#201c38);
+}
+
+.grad-pink {
+    background-image: linear-gradient(45deg,#fe6c5f 50%, #ff4f81);
+}
+
+
+.grad-orange {
+    background-image: linear-gradient(45deg, #ffae00 50%, #ffc241);
+}
+
+.text-shadow-slow {
+	text-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+.card-img-left {
+	width: 85px;
+}
+
+.img-circle {
+	border-radius: 50%;
+}
+
+.border-gray {
+	border: 3px solid #d7d7d7;
+}
+
+.text-white {
+	color: #fff !important;
+}
+
+.bg-gray {
+	background-color: #fcfbfc !important;
+}
+
+.table-show tr th {
+	width: 150px;
+}
+
+.table tr th {
+	background-color: #fcfbfc !important;
+}
+
+.text-semibold {
+	font-size: 0.95rem !important;
+}
+
+.dashboard-list-with-user {
+	height: 495px !important;
+}
