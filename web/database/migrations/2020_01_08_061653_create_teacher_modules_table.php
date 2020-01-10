@@ -19,6 +19,8 @@ class CreateTeacherModulesTable extends Migration
             $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
             $table->bigInteger('module_id')->unsigned()->nullable();
             $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
+            $table->bigInteger('scholar_year_id')->unsigned()->nullable();
+            $table->foreign('scholar_year_id')->references('id')->on('scholar_years')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -114,3 +114,8 @@ input[type="color" i] {
 .dashboard-list-with-user {
 	height: 495px !important;
 }
+
+.card .card-header .card-icon {
+    right: 0px;
+    top: -5px;
+}

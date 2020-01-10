@@ -6,6 +6,7 @@ Route::group(['prefix' => '{currentScholarYear}', 'middleware' => 'auth'], funct
 	// Administration area routes
 	Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() {
 	    Route::resource('departements', 'DepartementController');
+	    Route::resource('sub-levels', 'SubLevelController');
 	    Route::resource('classes', 'ClassController');
 	    Route::resource('modules', 'ModuleController');
 	    Route::resource('students', 'StudentController');
@@ -13,6 +14,14 @@ Route::group(['prefix' => '{currentScholarYear}', 'middleware' => 'auth'], funct
 	    Route::resource('courses', 'CourseController');
 	    Route::resource('admins', 'AdminController');
 	   	Route::delete('files/{id}', 'FileController@destroy')->name('files.delete');
+
+	    // Pages
+	    Route::get('dashboard', 'PagesController@dashboard')->name('admin.dashboard');
+
+	    // Additionnal routes
+	    Route::put('students/{id}/update-classe', 'StudentController@updateClasse')->name('students.update_classe');
+	    Route::delete('students/{id}/delete-classe', 'StudentController@deleteClasse')->name('students.delete_classe');
+	    Route::post('courses/{id}/save-document', 'CourseController@saveDocument')->name('courses.save_document');
 	});
 
 	// Students area routes
@@ -46,6 +55,3 @@ Route::group(['prefix' => '{currentScholarYear}', 'middleware' => 'auth'], funct
 	});
 });
 
-Route::get('test', function () {
-	dd(App\Helpers\Helper::getCurrentYear());
-});

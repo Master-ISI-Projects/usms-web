@@ -19,8 +19,8 @@
                             <i class="iconsminds-student-male-female"></i> Etudiants
                         </a>
                     </li>
-                    <li {!! Helper::routeIs('levels.index') ? 'class="active"' : '' !!}>
-                        <a href="{{ route('levels.index') }}">
+                    <li {!! Helper::routeIs('departements.index') ? 'class="active"' : '' !!}>
+                        <a href="{{ route('departements.index') }}">
                             <i class="iconsminds-three-arrow-fork"></i> Niveaux
                         </a>
                     </li>

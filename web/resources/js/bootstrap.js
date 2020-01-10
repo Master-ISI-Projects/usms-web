@@ -24,15 +24,15 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-import Echo from 'laravel-echo'
-import Constants from './constants/Constants'
+// import Echo from 'laravel-echo'
+// import Constants from './constants/Constants'
 
-window.Pusher = require('pusher-js');
+// window.Pusher = require('pusher-js');
 
-window.Echo = new Echo({
-	authEndpoint: window.baseUrl + '/broadcasting/auth',
-    broadcaster: 'pusher',
-    key: Constants.PUSHER_APP_KEY,
-    cluster: Constants.PUSHER_APP_CLUSTER,
-    encrypted: true
-});
+// window.Echo = new Echo({
+// 	authEndpoint: window.baseUrl + '/broadcasting/auth',
+//     broadcaster: 'pusher',
+//     key: Constants.PUSHER_APP_KEY,
+//     cluster: Constants.PUSHER_APP_CLUSTER,
+//     encrypted: true
+// });

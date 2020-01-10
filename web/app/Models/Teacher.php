@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -17,6 +18,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Teacher extends Model
 {
+    use Filterable;
+
+    public function modelFilter()
+    {
+        return $this->provideFilter(\App\ModelFilters\TeacherFilter::class);
+    }
+
     /**
      * The "type" of the auto-incrementing ID.
      *
@@ -56,8 +64,8 @@ class Teacher extends Model
      */
     public function modules()
     {
-        return $this->belongsToMany(Semester::class, 'teacher_modules')
+        return $this->belongsToMany(Module::class, 'teacher_modules')
                     ->as('teacher_modules')
-                    ->withPivot('teacher_id', 'semester_id');
+                    ->withPivot('teacher_id', 'module_id', 'scholar_year_id');
     }
 }

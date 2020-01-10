@@ -25,7 +25,6 @@ class TeacherSeeder extends Seeder
 	            'tel' => $faker->phoneNumber,
 	            'email' => $faker->unique()->safeEmail,
 	            'password' => bcrypt('123456789'),
-	            'visible_password' => '123456789',
 	            'is_active' =>  mt_rand(0, 1),
 	            'role' => Constant::USER_ROLES['teacher']
 	        ]);

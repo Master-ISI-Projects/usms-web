@@ -23,7 +23,7 @@
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('home') }}">Tableau de board</a>
+                            <a href="{{ url('/') }}">Tableau de board</a>
                         </li>
                         <li class="breadcrumb-item">
                             <a href="{{ route('teachers.index') }}">Enseignants</a>
@@ -55,6 +55,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="card mb-4">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0 w-100">
+                            <span class="text-uppercase">Departement</span>
+                            <span class="float-right text-muted text-primary">{{ $teacher->departement->name }}</span>
+                        </h6>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-9">
@@ -64,7 +72,7 @@
                             <a class="nav-link active text-uppercase" id="first-tab" data-toggle="tab" href="#informations-tab" role="tab" aria-controls="first" aria-selected="true">Plus d'informations</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-uppercase" id="second-tab" data-toggle="tab" href="#history-tab" role="tab" aria-controls="second" aria-selected="false">Cours</a>
+                            <a class="nav-link text-uppercase" id="second-tab" data-toggle="tab" href="#history-tab" role="tab" aria-controls="second" aria-selected="false">Modules</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -74,7 +82,7 @@
                                     <div class="card-body">
                                         <h5>Informations personnel</h5>
                                         <div class="separator mb-4"></div>
-                                        <table class="table table-bordered table-show mb-0"> 
+                                        <table class="table table-bordered table-show mb-0">
                                             <tr>
                                                 <th class="bg-gray">Civilité</th>
                                                 <td>{!! $teacher->user->gender_badge !!}</td>
@@ -91,30 +99,16 @@
                                                 <th class="bg-gray">N° Tel</th>
                                                 <td>{{ $teacher->user->tel }}</td>
                                             </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="card w-100">
-                                    <div class="card-body">
-                                        <h5>Accès à la plateforme</h5>
-                                        <div class="separator mb-4"></div>
-                                        <table class="table table-bordered table-show mb-0"> 
                                             <tr>
                                                 <th class="bg-gray">E-mail</th>
                                                 <td>{{ $teacher->user->email }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="bg-gray">Mot de passe</th>
-                                                <td>{{ $teacher->user->visible_password }}</td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="history-tab" role="tabpanel" aria-labelledby="history-tab">
+                        {{-- <div class="tab-pane fade" id="history-tab" role="tabpanel" aria-labelledby="history-tab">
                             <div class="row">
                                 <div class="card w-100">
                                     <div class="card-body">
@@ -157,7 +151,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

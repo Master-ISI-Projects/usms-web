@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * @property integer $id
@@ -18,12 +19,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $remember_token
  * @property string $created_at
  * @property string $updated_at
- * @property SchoolManager $schoolManager
- * @property Teacher $teacher
- * @property Student $student
+ * @property SchoolManager[] $schoolManagers
  */
-class User extends Model
+class User extends Authenticatable
 {
+    use Notifiable;
     /**
      * The "type" of the auto-incrementing ID.
      *
@@ -41,36 +41,36 @@ class User extends Model
         'picture',
         'tel',
         'email',
-        'role',
-        'is_active'
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
         'password',
+        'role',
+        'is_active',
         'remember_token',
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $dates = [
         'created_at',
         'updated_at'
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function schoolManagers()
+    public function schoolManager()
     {
-        return $this->hasMany('App\Models\SchoolManager');
+        return $this->hasOne(SchoolManager::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function student()
+    {
+        return $this->hasOne(Student::class, 'user_id');
     }
 
     /**

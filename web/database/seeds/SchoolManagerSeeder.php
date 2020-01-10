@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Faker\Factory;
 use App\Models\User;
 
-class AdminSeeder extends Seeder
+class SchoolManagerSeeder extends Seeder
 {
     /**
      * Run the database seeds.

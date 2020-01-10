@@ -24,7 +24,7 @@ class Constant
 	* User Roles
 	**/
 	public const USER_ROLES = [
-		'school_manager' => 'school_manager',
+		'admin' => 'admin',
 		'teacher' => 'teacher',
 		'student' => 'student'
 	];

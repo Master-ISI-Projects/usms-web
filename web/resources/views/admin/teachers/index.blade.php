@@ -25,14 +25,14 @@
                                     <a href="{{ route('teachers.show', ['id' => $teacher->id]) }}" class="w-15 w-sm-100">
                                         <p class="list-item-heading mb-1 truncate">{{ $teacher->user->full_name }}</p>
                                     </a>
-                                    {{-- <div class="text-center w-15 w-sm-100">
-                                        {!! $teacher->user->gender_badge !!}
-                                    </div> --}}
+                                    <div class="text-center w-15 w-sm-100">
+                                        <span class="badge badge-pill badge-primary">{{ $teacher->departement->name }}</span>
+                                    </div>
+                                    <p class="mb-1 text-muted text-small text-center w-20 w-sm-100">
+                                        {{ $teacher->user->email }}
+                                    </p>
                                     <p class="mb-1 text-muted text-small text-center w-15 w-sm-100">
                                         {{ $teacher->user->tel }}
-                                    </p>
-                                    <p class="mb-1 text-muted text-small text-center w-20 w-sm-100">
-                                        {{ $teacher->user->email }} 
                                     </p>
                                     <div class="text-center w-15 w-sm-100">
                                         {!! $teacher->user->is_active_badge !!}
@@ -61,7 +61,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
     {{-- End listing of data --}}
 
     {{-- Start filter menu --}}
@@ -72,8 +72,18 @@
                     <h5 class="mb-3 mt-3">Filtrer</h5>
                     <div class="separator mb-4"></div>
                     <div class="form-group">
-                        <label class="text-muted text-small" for="level_id">Chercher par nom</label>
+                        <label class="text-muted text-small" for="level_id">Nom</label>
                         <input type="text" name="full_name" class="form-control" placeholder="John Doe..." value="{{ request()->get('full_name') }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-muted text-small" for="level_id">Departement</label>
+                        <select name="departement_id" id="departement_id" class="form-control">
+                            @foreach ($departements as $departement)
+                                <option value="-1">-- All --</option>
+                                <option value="{{ $departement->id }}">{{ $departement->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <button class="btn btn-primary btn-block mt-5">Filtrer</button>
