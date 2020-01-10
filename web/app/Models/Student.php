@@ -6,8 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property integer $id
+ * @property integer $user_id
+ * @property string $apogee_number
+ * @property string $birth_date
  * @property string $created_at
  * @property string $updated_at
+ * @property User $user
  * @property Mark[] $marks
  * @property Registration[] $registrations
  */
@@ -23,7 +27,21 @@ class Student extends Model
     /**
      * @var array
      */
-    protected $fillable = ['created_at', 'updated_at'];
+    protected $fillable = [
+        'user_id',
+        'apogee_number',
+        'birth_date',
+        'created_at',
+        'updated_at'
+    ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

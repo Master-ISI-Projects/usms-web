@@ -1,4 +1,4 @@
-<?php
+mm<?php
 
 namespace App\Models;
 
@@ -18,7 +18,7 @@ class Module extends Model
 {
     /**
      * The "type" of the auto-incrementing ID.
-     * 
+     *
      * @var string
      */
     protected $keyType = 'integer';
@@ -26,14 +26,19 @@ class Module extends Model
     /**
      * @var array
      */
-    protected $fillable = ['semester_id', 'name', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'semester_id',
+        'name',
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function semester()
     {
-        return $this->belongsTo('App\Models\Semester');
+        return $this->belongsTo(Semester::class, 'semester_id');
     }
 
     /**
@@ -41,14 +46,16 @@ class Module extends Model
      */
     public function exams()
     {
-        return $this->hasMany('App\Models\Exam');
+        return $this->hasMany(Exam::class, 'module_id');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function teacherModules()
+    public function teachers()
     {
-        return $this->hasMany('App\Models\TeacherModule');
+        return $this->belongsToMany(Teacher::class, 'teacher_modules')
+                    ->as('teacher_modules')
+                    ->withPivot('semester_id', 'teacher_id');
     }
 }

@@ -1,4 +1,4 @@
-<?php
+m<?php
 
 namespace App\Models;
 
@@ -27,7 +27,14 @@ class Mark extends Model
     /**
      * @var array
      */
-    protected $fillable = ['exam_id', 'student_id', 'mark', 'session', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'exam_id',
+        'student_id',
+        'mark',
+        'session',
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

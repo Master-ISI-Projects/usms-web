@@ -1,4 +1,4 @@
-<?php
+m<?php
 
 namespace App\Models;
 
@@ -25,12 +25,18 @@ class Notification extends Model
     /**
      * @var array
      */
-    protected $fillable = ['classe_id', 'title', 'content', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'classe_id',
+        'title',
+        'content',
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function class()
+    public function classe()
     {
         return $this->belongsTo(Classe::class, 'classe_id');
     }

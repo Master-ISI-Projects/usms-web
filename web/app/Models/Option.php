@@ -25,7 +25,12 @@ class Option extends Model
     /**
      * @var array
      */
-    protected $fillable = ['departement_id', 'name', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'departement_id',
+        'name',
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

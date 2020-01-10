@@ -16,7 +16,7 @@ class ScholarYear extends Model
 {
     /**
      * The "type" of the auto-incrementing ID.
-     * 
+     *
      * @var string
      */
     protected $keyType = 'integer';
@@ -25,10 +25,10 @@ class ScholarYear extends Model
      * @var array
      */
     protected $fillable = [
-        'scholar_year', 
-        'start_at', 
-        'end_at', 
-        'created_at', 
+        'scholar_year',
+        'start_at',
+        'end_at',
+        'created_at',
         'updated_at'
     ];
 
@@ -36,9 +36,9 @@ class ScholarYear extends Model
      * @var array
      */
     protected $dates = [
-        'start_at', 
+        'start_at',
         'end_at',
-        'created_at', 
+        'created_at',
         'updated_at'
     ];
 
@@ -49,4 +49,21 @@ class ScholarYear extends Model
     {
         return $this->hasMany(Classe::class, 'scholar_year_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function evnets()
+    {
+        return $this->hasMany(Event::class, 'scholar_year_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function news()
+    {
+        return $this->hasMany(News::class, 'scholar_year_id');
+    }
+
 }

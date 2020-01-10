@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Module $module
  * @property Mark[] $marks
  */
-class Exams extends Model
+class Exam extends Model
 {
     /**
      * The "type" of the auto-incrementing ID.
@@ -29,7 +29,15 @@ class Exams extends Model
     /**
      * @var array
      */
-    protected $fillable = ['classe_id', 'module_id', 'type', 'duration', 'session', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'classe_id',
+        'module_id',
+        'type',
+        'duration',
+        'session',
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

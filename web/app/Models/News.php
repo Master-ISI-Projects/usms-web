@@ -10,17 +10,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $title
  * @property string $image
  * @property string $description
- * @property string $start_at
- * @property float $duration
+ * @property string $published_at
  * @property string $created_at
  * @property string $updated_at
  * @property ScholarYear $scholarYear
  */
-class Event extends Model
+class News extends Model
 {
     /**
      * The "type" of the auto-incrementing ID.
-     *
+     * 
      * @var string
      */
     protected $keyType = 'integer';
@@ -28,22 +27,13 @@ class Event extends Model
     /**
      * @var array
      */
-    protected $fillable = [
-        'scholar_year_id',
-        'title',
-        'image',
-        'description',
-        'start_at',
-        'duration',
-        'created_at',
-        'updated_at'
-    ];
+    protected $fillable = ['scholar_year_id', 'title', 'image', 'description', 'published_at', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function scholarYear()
     {
-        return $this->belongsTo(ScholarYear::class, 'scholar_year_id');
+        return $this->belongsTo('App\Models\ScholarYear');
     }
 }

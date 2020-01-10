@@ -26,7 +26,12 @@ class Semester extends Model
     /**
      * @var array
      */
-    protected $fillable = ['option_id', 'name', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'option_id',
+        'name',
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
