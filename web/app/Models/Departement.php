@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property integer $id
  * @property string $name
+ * @property integer $teacher_id
  * @property string $created_at
  * @property string $updated_at
  * @property Option[] $options
@@ -25,6 +26,7 @@ class Departement extends Model
      */
     protected $fillable = [
         'name',
+        'teacher_id',
         'created_at',
         'updated_at'
     ];

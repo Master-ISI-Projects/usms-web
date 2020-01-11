@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Teacher;
 use App\Models\Departement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,8 @@ class DepartementController extends Controller
     public function index()
     {
         return view('admin.departements.index', [
-            'departements' => Departement::all()
+            'departements' => Departement::all(),
+            'teachers' => Teacher::all()
         ]);
     }
 
@@ -43,7 +45,7 @@ class DepartementController extends Controller
     public function store(Request $request)
     {
         Departement::create(
-            $request->only('name')
+            $request->only('name', 'teacher_id')
         );
 
         session()->flash('success', 'Saved');
@@ -63,7 +65,7 @@ class DepartementController extends Controller
         $departement = Departement::findOrFail($id);
 
         $departement->update(
-            $request->only('name')
+            $request->only('name', 'teacher_id')
         );
 
         session()->flash('success', 'Updated');

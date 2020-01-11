@@ -30,7 +30,9 @@
                                         </div>
                                         <div class="pl-1 align-self-center">
                                             <button class="header-icon btn btn-empty text-danger open-modal-edit-departement"
-                                                    data-departement-id="{{ $departement->id }}" data-departement-title="{{ $departement->name }}"
+                                                    data-departement-id="{{ $departement->id }}"
+                                                    data-departement-title="{{ $departement->name }}"
+                                                    data-departement-chef-departement="{{ $departement->teacher_id }}"
                                                     data-departement-url-update="{{ route('departements.update', ['id' => $departement->id]) }}"
                                                     data-departement-url-delete="{{ route('departements.destroy', ['id' => $departement->id]) }}"
                                                     type="button">
@@ -64,6 +66,19 @@
                             <label for="name">Nom de departement</label>
                             <input type="text" required class="form-control" name="name" id="name" placeholder="Nom de departement">
                         </div>
+                        <div class="form-group">
+                            <label for="teacher_id">Chef de departement</label>
+                            <select name="teacher_id" class="form-control @error('teacher_id') is-invalid @enderror" id="teacher_id">
+                                @foreach ($teachers as $teacher)
+                                    <option {{ old('teacher_id') == $teacher->id ? 'selected' : '' }} value="{{ $teacher->id }}">{{ $teacher->full_name }}</option>
+                                @endforeach
+                            </select>
+                            @error('teacher_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Fermer</button>
@@ -91,6 +106,19 @@
                             <label for="name">Nom de departement</label>
                             <input type="text" required class="form-control" name="name" id="name" placeholder="Nom de departement">
                         </div>
+                        <div class="form-group">
+                            <label for="teacher_id">Chef de departement</label>
+                            <select name="teacher_id" class="form-control @error('teacher_id') is-invalid @enderror" id="teacher_id">
+                                @foreach ($teachers as $teacher)
+                                    <option value="{{ $teacher->id }}">{{ $teacher->full_name }}</option>
+                                @endforeach
+                            </select>
+                            @error('teacher_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-confirmation-message="Voulez vous vraiment supprimer cette departement ?" data-form-id="form-delete-level" id="btn-delete-level" class="btn btn-sm btn-outline-danger mr-auto btn-delete-resource redirect-after-confirmation">Supprimer</button>
@@ -114,6 +142,8 @@
                 var modal = $('#modal-edit-departement');
                 modal.find('#modal-title').text('Departement: ' + $(this).data('departement-title'));
                 modal.find('input[type="text"]').val($(this).data('departement-title'));
+                modal.find("#teacher_id").val($(this).data('departement-chef-departement'));
+                console.log($(this).data('departement-chef-departement'));
                 modal.find('form').attr('action', $(this).data('departement-url-update'));
                 modal.find('#form-delete-departement').attr('action', $(this).data('departement-url-delete'));
                 modal.modal();
