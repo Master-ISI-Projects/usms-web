@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Departement;
 use App\Helpers\Constant;
-use App\Models\SubLevel;
 use App\Helpers\Helper;
 use App\Models\Student;
 use App\Models\Classe;
-use App\Models\Level;
+use App\Models\Option;
 use App\Models\User;
 
 class StudentController extends Controller
@@ -20,12 +20,11 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         return view('admin.students.index', [
             'students' => Student::filter(request()->all())->paginate(Constant::COUNT_PER_PAGE),
-            'levels' => Level::all(['id', 'title']),
-            'subLevels' => SubLevel::all(['id', 'title', 'level_id']),
-            'classes' => Classe::all(['id', 'title', 'sub_level_id', 'scholar_year_id'])
+            'departements' => Departement::all(['id', 'name']),
+            'options' => Option::all(['id', 'name', 'departement_id'])
         ]);
     }
 
@@ -52,22 +51,22 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $user = User::create([
-            'first_name' => $request->first_name, 
-            'last_name' => $request->last_name, 
-            'gender' => $request->gender, 
-            'picture' => Helper::saveFileFromRequest($request, 'picture'), 
-            'tel' => $request->tel, 
-            'email' => $request->email, 
-            'password' => bcrypt($request->password), 
-            'visible_password' => $request->password, 
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'gender' => $request->gender,
+            'picture' => Helper::saveFileFromRequest($request, 'picture'),
+            'tel' => $request->tel,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'visible_password' => $request->password,
             'role' => Constant::USER_ROLES['student'],
             'is_active' => $request->is_active ? true : false
         ]);
 
         $user->student()->save(
             Student::create([
-                'birth_date' => Helper::parseDate($request->birth_date),  
-                'registration_number' => $request->registration_number, 
+                'birth_date' => Helper::parseDate($request->birth_date),
+                'registration_number' => $request->registration_number,
                 'address' => $request->address
             ])
         );
@@ -120,20 +119,20 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
 
         $student->user->update([
-            'first_name' => $request->first_name, 
-            'last_name' => $request->last_name, 
-            'gender' => $request->gender, 
-            'picture' => Helper::saveFileFromRequest($request, 'picture', $student->user->picture) ?? $student->user->picture, 
-            'tel' => $request->tel, 
-            'email' => $request->email, 
-            'password' => $request->password ? bcrypt($request->password) : $student->user->password, 
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'gender' => $request->gender,
+            'picture' => Helper::saveFileFromRequest($request, 'picture', $student->user->picture) ?? $student->user->picture,
+            'tel' => $request->tel,
+            'email' => $request->email,
+            'password' => $request->password ? bcrypt($request->password) : $student->user->password,
             'visible_password' => $request->password ? $request->password : $student->user->visible_password,
-            'is_active' => $request->is_active ? true : false, 
+            'is_active' => $request->is_active ? true : false,
         ]);
 
         $student->update([
-            'birth_date' => Helper::parseDate($request->birth_date),  
-            'registration_number' => $request->registration_number, 
+            'birth_date' => Helper::parseDate($request->birth_date),
+            'registration_number' => $request->registration_number,
             'address' => $request->address
         ]);
 
@@ -177,7 +176,7 @@ class StudentController extends Controller
         if(optional($student->currentClasse)->id) {
             $student->classes()->detach($student->currentClasse->id);
         }
-        
+
         session()->flash('success', 'Deleted');
 
         return redirect()->route('students.index');

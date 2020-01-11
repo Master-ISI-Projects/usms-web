@@ -1,16 +1,15 @@
 <?php
 
-use Faker\Generator as Faker;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Models\Student;
+use App\Models\Teacher;
 use App\Helpers\Constant;
 use Faker\Factory;
 
-class DatabaseSeeder extends Seeder
+class StudentSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
@@ -31,15 +30,11 @@ class DatabaseSeeder extends Seeder
             ]);
 
             $user->teacher()->save(
-                Student::create([
+                Teacher::create([
                     'apogee_number' => mt_rand(1000, 5000),
                     'birth_date' => $faker->dateTimeThisCentury->format('Y-m-d'),
                 ])
             );
         }
-
-        // $this->call(StudentSeeder::class);
-        // $this->call(TeacherSeeder::class);
-        // $this->call(ScholarYearSeeder::class);
     }
 }

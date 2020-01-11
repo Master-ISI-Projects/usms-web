@@ -21,7 +21,7 @@
                     </li>
                     <li {!! Helper::routeIs('departements.index') ? 'class="active"' : '' !!}>
                         <a href="{{ route('departements.index') }}">
-                            <i class="iconsminds-three-arrow-fork"></i> Niveaux
+                            <i class="iconsminds-museum"></i> Departements
                         </a>
                     </li>
                     <li {!! Helper::routeIs('classes.index') ? 'class="active"' : '' !!}>

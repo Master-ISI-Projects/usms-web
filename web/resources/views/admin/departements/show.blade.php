@@ -100,8 +100,8 @@
                                                 <div id="accordion">
                                                     @foreach ($option->semesters as $semester)
                                                         <div class="border mb-2">
-                                                            <div class="alert alert-dark mb-0 cursor-pointer" data-toggle="collapse" data-target="#collapse-{{ $semester->id }}" aria-expanded="true" aria-controls="collapse-{{ $semester->id }}">
-                                                                <span>{{ $semester->name }}</span>
+                                                            <div class="alert alert-dark mb-0">
+                                                                <span class="cursor-pointer" data-toggle="collapse" data-target="#collapse-{{ $semester->id }}" aria-expanded="true" aria-controls="collapse-{{ $semester->id }}">{{ $semester->name }}</span>
                                                                 <span class="float-right">
                                                                     <button class="header-icon btn btn-empty text-primary p-0 mr-2 btn-add-module"
                                                                             data-semester-id="{{ $semester->id }}"
@@ -247,7 +247,7 @@
             <form method="post" action="{{ route('semesters.store') }}">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title">Nouveau Module</h5>
+                    <h5 class="modal-title" id="modal-title">Nouveau Semestre</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

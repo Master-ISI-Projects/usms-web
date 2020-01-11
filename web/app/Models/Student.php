@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -17,6 +18,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Student extends Model
 {
+    use Filterable;
+
+    public function modelFilter()
+    {
+        return $this->provideFilter(\App\ModelFilters\StudentFilter::class);
+    }
+
     /**
      * The "type" of the auto-incrementing ID.
      *
