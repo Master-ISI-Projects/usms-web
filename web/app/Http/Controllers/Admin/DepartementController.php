@@ -25,9 +25,13 @@ class DepartementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function show($id)
     {
-        //
+        $departement = Departement::findOrFail($id);
+
+        return view('admin.departements.show', [
+            'departement' => $departement
+        ]);
     }
 
     /**

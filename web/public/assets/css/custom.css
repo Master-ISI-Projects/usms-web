@@ -119,3 +119,11 @@ input[type="color" i] {
     right: 0px;
     top: -5px;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.b-rad-0 {
+   border-radius: 0px;
+}

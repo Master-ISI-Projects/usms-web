@@ -6,9 +6,11 @@ Route::group(['prefix' => '{currentScholarYear}', 'middleware' => 'auth'], funct
 	// Administration area routes
 	Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() {
 	    Route::resource('departements', 'DepartementController');
+	    Route::resource('options', 'OptionController');
+	    Route::resource('semesters', 'SemesterController');
+	    Route::resource('modules', 'ModuleController');
 	    Route::resource('sub-levels', 'SubLevelController');
 	    Route::resource('classes', 'ClassController');
-	    Route::resource('modules', 'ModuleController');
 	    Route::resource('students', 'StudentController');
 	    Route::resource('teachers', 'TeacherController');
 	    Route::resource('courses', 'CourseController');

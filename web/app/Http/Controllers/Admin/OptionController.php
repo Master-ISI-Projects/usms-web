@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Option;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Module;
 
-class ModuleController extends Controller
+class OptionController extends Controller
 {
     /**
      * Store a newly created resource in storage.
@@ -16,8 +16,8 @@ class ModuleController extends Controller
      */
     public function store(Request $request)
     {
-        Module::create(
-            $request->only('name', 'semester_id')
+        Option::create(
+            $request->only('name', 'departement_id')
         );
 
         session()->flash('success', 'Saved');
@@ -34,9 +34,9 @@ class ModuleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $module = Module::findOrfail($id);
+        $departement = Option::findOrFail($id);
 
-        $module->update(
+        $departement->update(
             $request->only('name')
         );
 
@@ -53,9 +53,8 @@ class ModuleController extends Controller
      */
     public function destroy($id)
     {
-        $module = Module::findOrfail($id);
-
-        $module->delete();
+        $departement = Option::findOrFail($id);
+        $departement->delete();
 
         session()->flash('success', 'Deleted');
 

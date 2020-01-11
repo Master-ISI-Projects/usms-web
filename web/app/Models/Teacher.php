@@ -68,4 +68,13 @@ class Teacher extends Model
                     ->as('teacher_modules')
                     ->withPivot('teacher_id', 'module_id', 'scholar_year_id');
     }
+
+    /**
+     * Get the fullName of Teacher
+     *
+     * @return string
+     */
+    public function getFullNameAttribute() {
+        return $this->user->full_name;
+    }
 }

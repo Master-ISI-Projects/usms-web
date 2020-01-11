@@ -36,4 +36,17 @@ class Departement extends Model
     {
         return $this->hasMany(Option::class, 'departement_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function cheif()
+    {
+        return $this->belongsTo(Teacher::class, 'teacher_id');
+    }
+
+    public function teachers()
+    {
+        return $this->hasMany(Teacher::class, 'departement_id');
+    }
 }

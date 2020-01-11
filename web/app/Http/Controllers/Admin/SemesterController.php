@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Module;
+use App\Models\Semester;
 
-class ModuleController extends Controller
+class SemesterController extends Controller
 {
     /**
      * Store a newly created resource in storage.
@@ -16,8 +16,8 @@ class ModuleController extends Controller
      */
     public function store(Request $request)
     {
-        Module::create(
-            $request->only('name', 'semester_id')
+        Semester::create(
+            $request->only('name', 'option_id')
         );
 
         session()->flash('success', 'Saved');
@@ -34,9 +34,9 @@ class ModuleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $module = Module::findOrfail($id);
+        $semester = Semester::findOrfail($id);
 
-        $module->update(
+        $semester->update(
             $request->only('name')
         );
 
@@ -53,9 +53,9 @@ class ModuleController extends Controller
      */
     public function destroy($id)
     {
-        $module = Module::findOrfail($id);
+        $semester = Semester::findOrfail($id);
 
-        $module->delete();
+        $semester->delete();
 
         session()->flash('success', 'Deleted');
 

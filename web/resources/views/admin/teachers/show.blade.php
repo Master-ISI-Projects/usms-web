@@ -16,7 +16,7 @@
                         <form method="post" action="{{ route('teachers.destroy', ['id' => $teacher->id]) }}">
                             @csrf
                             @method('DELETE')
-                            <a class="dropdown-item btn-delete-resource redirect-after-confirmation" data-confirmation-message="Voulez vous vraiment supprimer l'enseignant : {{ $teacher->user->full_name }} ?" href="{{ route('teachers.destroy', ['id' => $teacher->id]) }}">Supprimer</a>
+                            <a class="dropdown-item btn-delete-resource redirect-after-confirmation" data-confirmation-message="Voulez vous vraiment supprimer l'enseignant : {{ $teacher->full_name }} ?" href="{{ route('teachers.destroy', ['id' => $teacher->id]) }}">Supprimer</a>
                         </form>
                     </div>
                 </div>
@@ -58,8 +58,8 @@
                 <div class="card mb-4">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <h6 class="mb-0 w-100">
-                            <span class="text-uppercase">Departement</span>
-                            <span class="float-right text-muted text-primary">{{ $teacher->departement->name }}</span>
+                            <span class="text-uppercase">Dept.</span>
+                            <span class="float-right text-muted text-primary text-uppercase">{{ $teacher->departement->name }}</span>
                         </h6>
                     </div>
                 </div>
