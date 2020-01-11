@@ -19,7 +19,7 @@ class CreateEventsTable extends Migration
             $table->text('image')->nullable();
             $table->text('description')->nullable();
             $table->date('start_at')->nullable();
-            $table->float('duration')->nullable();
+            $table->string('duration', 250)->nullable();
             $table->bigInteger('scholar_year_id')->unsigned()->nullable();
             $table->foreign('scholar_year_id')->references('id')->on('scholar_years')->onDelete('cascade');
             $table->timestamps();

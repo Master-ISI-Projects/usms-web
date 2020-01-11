@@ -127,3 +127,7 @@ input[type="color" i] {
 .b-rad-0 {
    border-radius: 0px;
 }
+
+.d-contents {
+    display: contents;
+}

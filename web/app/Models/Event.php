@@ -46,4 +46,15 @@ class Event extends Model
     {
         return $this->belongsTo(ScholarYear::class, 'scholar_year_id');
     }
+
+    /**
+     * Get the image path of news
+     *
+     * @return string
+     */
+    public function getImagePathAttribute() {
+        return $this->image
+                ? asset('storage/' . $this->image)
+                : asset('assets/img/image-placeholder.png');
+    }
 }

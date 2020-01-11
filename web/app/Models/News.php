@@ -19,7 +19,7 @@ class News extends Model
 {
     /**
      * The "type" of the auto-incrementing ID.
-     * 
+     *
      * @var string
      */
     protected $keyType = 'integer';
@@ -27,13 +27,32 @@ class News extends Model
     /**
      * @var array
      */
-    protected $fillable = ['scholar_year_id', 'title', 'image', 'description', 'published_at', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'scholar_year_id',
+        'title',
+        'image',
+        'description',
+        'published_at',
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function scholarYear()
     {
-        return $this->belongsTo('App\Models\ScholarYear');
+        return $this->belongsTo(ScholarYear::class, 'scholar_year_id');
+    }
+
+    /**
+     * Get the image path of news
+     *
+     * @return string
+     */
+    public function getImagePathAttribute() {
+        return $this->image
+                ? asset('storage/' . $this->image)
+                : asset('assets/img/image-placeholder.png');
     }
 }

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\News;
+use App\Models\Event;
 use App\Helpers\Helper;
 use App\Helpers\Constant;
 use App\Models\ScholarYear;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class NewsController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +18,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view('admin.news.index', [
-            'news' => News::paginate(
+        return view('admin.events.index', [
+            'events' => Event::paginate(
                 Constant::COUNT_PER_PAGE
             )
         ]);
@@ -32,7 +32,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('admin.news.create', [
+        return view('admin.events.create', [
             'scholarYears' => ScholarYear::all()
         ]);
     }
@@ -44,10 +44,10 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        $news = News::findOrFail($id);
+        $event = Event::findOrFail($id);
 
-        return view('admin.news.show', [
-            'news' => $news
+        return view('admin.events.show', [
+            'event' => $event
         ]);
     }
 
@@ -59,17 +59,20 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        News::create([
+        $event = Event::create([
             'title' => $request->title,
             'description' => $request->description,
-            'published_at' => Helper::parseDate($request->published_at),
+            'start_at' => Helper::parseDate($request->start_at),
+            'duration' => $request->duration,
             'scholar_year_id' => $request->scholar_year_id,
-            'image' => Helper::saveFileFromRequest($request, 'image', null, 'new_images')
+            'image' => Helper::saveFileFromRequest($request, 'image', null, 'events_images')
         ]);
+
+        dd($event);
 
         session()->flash('success', 'Saved');
 
-        return redirect()->route('news.index');
+        return redirect()->route('events.index');
     }
 
     /**
@@ -79,10 +82,10 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        $news = News::findOrFail($id);
+        $event = Event::findOrFail($id);
 
-        return view('admin.news.edit', [
-            'news' => $news,
+        return view('admin.events.edit', [
+            'event' => $event,
             'scholarYears' => ScholarYear::all()
         ]);
     }
@@ -96,19 +99,20 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $news = News::findOrFail($id);
+        $event = Event::findOrFail($id);
 
-        $news->update([
+        $event->update([
             'title' => $request->title,
             'description' => $request->description,
-            'published_at' => Helper::parseDate($request->published_at),
+            'start_at' => Helper::parseDate($request->start_at),
+            'duration' => $request->duration,
             'scholar_year_id' => $request->scholar_year_id,
-            'image' => Helper::saveFileFromRequest($request, 'image', $news->image, 'news_images') ?? $news->image
+            'image' => Helper::saveFileFromRequest($request, 'image', $event->image, 'events_images') ?? $event->image
         ]);
 
         session()->flash('success', 'Updated');
 
-        return redirect()->route('news.index');
+        return redirect()->route('events.index');
     }
 
     /**
@@ -119,8 +123,8 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        $news = News::findOrFail($id);
-        $news->delete();
+        $event = Event::findOrFail($id);
+        $event->delete();
 
         session()->flash('success', 'Deleted');
 

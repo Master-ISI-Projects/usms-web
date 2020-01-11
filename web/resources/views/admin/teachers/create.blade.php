@@ -126,7 +126,7 @@
 		                                <label for="departement_id">N° Tel</label>
 		                                <select name="departement_id" id="departement_id" class="form-control @error('departement_id') is-invalid @enderror">
 		                                    @foreach ($departements as $departement)
-		                                        <option {{ old('departement_id') == $departement ?: 'selected' }} value="{{ $departement->id }}">{{ $departement->name }}</option>
+		                                        <option {{ old('departement_id') == $departement ? 'selected' : '' }} value="{{ $departement->id }}">{{ $departement->name }}</option>
 		                                    @endforeach
 		                                </select>
 		                            	@error('departement_id')
