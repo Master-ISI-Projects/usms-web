@@ -3,7 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
-.env
+# .env
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
