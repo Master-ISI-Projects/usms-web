@@ -35,7 +35,7 @@
                             <p class="mb-3">{{ $departement->name }}</p>
                             <div class="separator"></div>
                             <p class="text-muted text-small mb-2 mt-3">Chef de departement</p>
-                            <p class="mb-0">{{ $departement->cheif->fullName }}</p>
+                            <p class="mb-0">{{ optional($departement->cheif)->fullName ?? "###" }}</p>
                         </div>
                     </div>
                     <div class="card mb-4">

@@ -13,11 +13,11 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="{{ route('teachers.edit', ['id' => $teacher->id]) }}">Editer</a>
-                        <form method="post" action="{{ route('teachers.destroy', ['id' => $teacher->id]) }}">
+                        <form method="post" id="form-delete-resource" action="{{ route('teachers.destroy', ['id' => $teacher->id]) }}">
                             @csrf
                             @method('DELETE')
-                            <a class="dropdown-item btn-delete-resource redirect-after-confirmation" data-confirmation-message="Voulez vous vraiment supprimer l'enseignant : {{ $teacher->full_name }} ?" href="{{ route('teachers.destroy', ['id' => $teacher->id]) }}">Supprimer</a>
                         </form>
+                        <a data-form-id="form-delete-resource" class="dropdown-item btn-delete-resource redirect-after-confirmation" data-confirmation-message="Voulez vous vraiment supprimer ?" href="{{ route('students.destroy', ['id' => $teacher->id]) }}">Supprimer</a>
                     </div>
                 </div>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
@@ -59,7 +59,7 @@
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <h6 class="mb-0 w-100">
                             <span class="text-uppercase">Dept.</span>
-                            <span class="float-right text-muted text-primary text-uppercase">{{ $teacher->departement->name }}</span>
+                            <span class="float-right text-muted text-primary text-uppercase">{{ optional($teacher->departement)->name ?? '###' }}</span>
                         </h6>
                     </div>
                 </div>

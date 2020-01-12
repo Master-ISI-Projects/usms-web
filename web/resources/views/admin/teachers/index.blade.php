@@ -23,10 +23,10 @@
                             <div class="pl-2 d-flex flex-grow-1 min-width-zero">
                                 <div class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                                     <a href="{{ route('teachers.show', ['id' => $teacher->id]) }}" class="w-15 w-sm-100">
-                                        <p class="list-item-heading mb-1 truncate">{{ $teacher->user->full_name }}</p>
+                                        <p class="list-item-heading mb-1 truncate">{{ $teacher->full_name }}</p>
                                     </a>
                                     <div class="text-center w-15 w-sm-100">
-                                        <span class="badge badge-pill badge-primary">{{ $teacher->departement->name }}</span>
+                                        <span class="badge badge-pill badge-primary">{{ optional($teacher->departement)->name ?? '###' }}</span>
                                     </div>
                                     <p class="mb-1 text-muted text-small text-center w-20 w-sm-100">
                                         {{ $teacher->user->email }}

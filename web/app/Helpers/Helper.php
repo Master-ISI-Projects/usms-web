@@ -56,6 +56,10 @@ class Helper
 		return Carbon::now()->year . '-' . (Carbon::now()->year + 1);
 	}
 
+	public static function getCurrentYearId() {
+		return \App\Models\ScholarYear::where('scholar_year', self::getCurrentYear())->first()->id;
+	}
+
 	/*
 	* Routes helpers
 	*/

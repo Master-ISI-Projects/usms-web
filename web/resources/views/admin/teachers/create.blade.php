@@ -37,7 +37,7 @@
 	                    	<input type="file" class="hide" name="picture" id="file-user-picture">
 	                    </div>
 	                    <div class="card-footer bg-white">
-	                    	<button id="select-user-picture" type="button" class="btn btn-primary btn-block">Choisie une image</button>
+	                    	<button id="select-user-picture" type="button" class="btn btn-primary btn-block">Choisir une image</button>
 	                    </div>
 	                </div>
 
@@ -102,7 +102,7 @@
 	                        	<div class="col-md-3">
 		                            <div class="form-group">
 		                                <label for="birth_date">Date de naissance</label>
-		                                <input type="text" class="form-control datepicker @error('birth_date') is-invalid @enderror" name="birth_date" readonly autocomplete="off" id="birth_date" value="{{ old('birth_date') }}" placeholder="Date de naissance">
+		                                <input type="text" class="form-control datepicker @error('birth_date') is-invalid @enderror" name="birth_date" readonly autocomplete="off" id="birth_date" value="{{ Helper::formatDate(old('birth_date')) }}" placeholder="Date de naissance">
 		                            	@error('birth_date')
 		                                    <span class="invalid-feedback" role="alert">
 		                                        <strong>{{ $message }}</strong>
@@ -123,10 +123,10 @@
 	                        	</div>
 	                        	<div class="col-md-6">
 		                            <div class="form-group">
-		                                <label for="departement_id">N° Tel</label>
+		                                <label for="departement_id">Departement</label>
 		                                <select name="departement_id" id="departement_id" class="form-control @error('departement_id') is-invalid @enderror">
 		                                    @foreach ($departements as $departement)
-		                                        <option {{ old('departement_id') == $departement ? 'selected' : '' }} value="{{ $departement->id }}">{{ $departement->name }}</option>
+		                                        <option {{ old('departement_id') == $departement->id ? 'selected' : '' }} value="{{ $departement->id }}">{{ $departement->name }}</option>
 		                                    @endforeach
 		                                </select>
 		                            	@error('departement_id')

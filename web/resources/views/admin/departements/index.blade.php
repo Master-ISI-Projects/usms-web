@@ -69,6 +69,7 @@
                         <div class="form-group">
                             <label for="teacher_id">Chef de departement</label>
                             <select name="teacher_id" class="form-control @error('teacher_id') is-invalid @enderror" id="teacher_id">
+                                <option value="-1">----</option>
                                 @foreach ($teachers as $teacher)
                                     <option {{ old('teacher_id') == $teacher->id ? 'selected' : '' }} value="{{ $teacher->id }}">{{ $teacher->full_name }}</option>
                                 @endforeach
@@ -109,6 +110,7 @@
                         <div class="form-group">
                             <label for="teacher_id">Chef de departement</label>
                             <select name="teacher_id" class="form-control @error('teacher_id') is-invalid @enderror" id="teacher_id">
+                                <option value="-1">----</option>
                                 @foreach ($teachers as $teacher)
                                     <option value="{{ $teacher->id }}">{{ $teacher->full_name }}</option>
                                 @endforeach
@@ -142,8 +144,7 @@
                 var modal = $('#modal-edit-departement');
                 modal.find('#modal-title').text('Departement: ' + $(this).data('departement-title'));
                 modal.find('input[type="text"]').val($(this).data('departement-title'));
-                modal.find("#teacher_id").val($(this).data('departement-chef-departement'));
-                console.log($(this).data('departement-chef-departement'));
+                modal.find("#teacher_id").val($(this).data('departement-chef-departement') != '' ? $(this).data('departement-chef-departement') : -1);
                 modal.find('form').attr('action', $(this).data('departement-url-update'));
                 modal.find('#form-delete-departement').attr('action', $(this).data('departement-url-delete'));
                 modal.modal();

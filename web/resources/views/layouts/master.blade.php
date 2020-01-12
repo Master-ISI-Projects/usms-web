@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>@yield('title') | {{ config('app.name') }}</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-   
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/vendor/component-custom-switch.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/vendor/perfect-scrollbar.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/vendor/sweetalert.css') }}"/>
-    
+
     <link href="{{ asset("assets/css/app.css") }}" rel="stylesheet"/>
 
     @yield('plugin-stylesheet')
@@ -49,9 +49,9 @@
     <script src="{{ asset('assets/js/vendor/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/js/vendor/mousetrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/vendor/sweetalert.js') }}" type="text/javascript"></script>
-    
+
     @yield('plugin-javascript')
-    
+
     <script src="{{ asset('assets/js/dore.script.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <script>
@@ -86,14 +86,14 @@
                                 form.submit();
                             })
                         }
-                    }])
+                    }]);
                 }
             });
         })
     </script>
 
     @yield('custom-javascript')
-    
+
     <script src="{{ asset("assets/js/app.js") }}" defer></script>
 
     @include('layouts.includes.messages')

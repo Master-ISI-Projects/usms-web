@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Helpers\Helper;
+
 trait CurrentYearScope {
 
     /**
@@ -12,6 +14,6 @@ trait CurrentYearScope {
      */
     public function scopeCurrentYear($query)
     {
-        return $query->where('scholar_year_id', config('scholaryear.current_scholar_year_id'));
+        return $query->where('scholar_year_id', Helper::getCurrentYearId());
     }
 }

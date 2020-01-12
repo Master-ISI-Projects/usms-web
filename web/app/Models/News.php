@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\CurrentYearScope;
 
 /**
  * @property integer $id
@@ -17,6 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class News extends Model
 {
+    use CurrentYearScope;
+
     /**
      * The "type" of the auto-incrementing ID.
      *

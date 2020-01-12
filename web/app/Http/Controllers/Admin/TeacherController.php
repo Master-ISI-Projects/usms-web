@@ -96,7 +96,8 @@ class TeacherController extends Controller
     public function edit($id)
     {
         return view('admin.teachers.edit', [
-            'teacher' => Teacher::findOrFail($id)
+            'teacher' => Teacher::findOrFail($id),
+            'departements' => Departement::all()
         ]);
     }
 
@@ -125,6 +126,7 @@ class TeacherController extends Controller
 
         $teacher->update([
             'birth_date' => Helper::parseDate($request->birth_date),
+            'departement_id' => $request->departement_id,
         ]);
 
         session()->flash('success', 'Updated');
@@ -146,14 +148,5 @@ class TeacherController extends Controller
         session()->flash('success', 'Deleted');
 
         return redirect()->route('teachers.index');
-    }
-
-    public function courses($teacherId)
-    {
-        $teacher = Teacher::findOrFail($teacherId);
-
-        return response()->json([
-            'courses' => CourseResource::collection($teacher->courses)
-        ], 200);
     }
 }

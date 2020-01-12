@@ -29,16 +29,6 @@
                             <i class="simple-icon-grid"></i> Classes
                         </a>
                     </li>
-                    <li {!! Helper::routeIs('courses.index') ? 'class="active"' : '' !!}>
-                        <a href="{{ route('courses.index') }}">
-                            <i class="iconsminds-digital-drawing"></i> Cours
-                        </a>
-                    </li>
-                    <li {!! Helper::routeIs('admins.index') ? 'class="active"' : '' !!}>
-                        <a href="{{ route('admins.index') }}">
-                            <i class="iconsminds-male-female"></i> Administrateurs
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>

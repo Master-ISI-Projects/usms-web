@@ -44,9 +44,10 @@ class DepartementController extends Controller
      */
     public function store(Request $request)
     {
-        Departement::create(
-            $request->only('name', 'teacher_id')
-        );
+        Departement::create([
+            'name' => $request->name,
+            'teacher_id' => $request->teacher_id != -1 ? $request->teacher_id : null
+        ]);
 
         session()->flash('success', 'Saved');
 
@@ -64,9 +65,10 @@ class DepartementController extends Controller
     {
         $departement = Departement::findOrFail($id);
 
-        $departement->update(
-            $request->only('name', 'teacher_id')
-        );
+        $departement->update([
+            'name' => $request->name,
+            'teacher_id' => $request->teacher_id != -1 ? $request->teacher_id : null
+        ]);
 
         session()->flash('success', 'Updated');
 

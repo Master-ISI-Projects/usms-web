@@ -59,7 +59,7 @@
 		    		<div class="card mb-4">
 	                    <div class="card-body">
 	                        <h5>Informations personnel</h5>
-	                    	<div class="separator mb-4"></div>	                        
+	                    	<div class="separator mb-4"></div>
 	                        <div class="row">
 	                        	<div class="col-md-6">
 		                            <div class="form-group">
@@ -100,7 +100,7 @@
 	                        	</div>
 	                        </div>
 	                        <div class="row">
-	                        	<div class="col-md-6">
+	                        	<div class="col-md-3">
 		                            <div class="form-group">
 		                                <label for="birth_date">Date de naissance</label>
 		                                <input type="text" class="form-control datepicker @error('birth_date') is-invalid @enderror" name="birth_date" readonly autocomplete="off" id="birth_date" value="{{ old('birth_date', Helper::formatDate($teacher->birth_date)) }}" placeholder="Date de naissance">
@@ -111,11 +111,27 @@
 		                                @enderror
 		                            </div>
 	                        	</div>
-	                        	<div class="col-md-6">
+	                        	<div class="col-md-3">
 		                            <div class="form-group">
 		                                <label for="tel">N° Tel</label>
 		                                <input type="tel" class="form-control @error('tel') is-invalid @enderror" name="tel" id="tel" value="{{ old('tel', $teacher->user->tel) }}" placeholder="N° Tel">
 		                            	@error('tel')
+		                                    <span class="invalid-feedback" role="alert">
+		                                        <strong>{{ $message }}</strong>
+		                                    </span>
+		                                @enderror
+		                            </div>
+	                        	</div>
+	                        	<div class="col-md-6">
+		                            <div class="form-group">
+		                                <label for="departement_id">Departement</label>
+		                                <select name="departement_id" id="departement_id" class="form-control @error('departement_id') is-invalid @enderror">
+											<option value="-1">----</option>
+		                                    @foreach ($departements as $departement)
+		                                        <option {{ old('departement_id', $teacher->departement_id) == $departement->id ? 'selected' : '' }} value="{{ $departement->id }}">{{ $departement->name }}</option>
+		                                    @endforeach
+		                                </select>
+		                            	@error('departement_id')
 		                                    <span class="invalid-feedback" role="alert">
 		                                        <strong>{{ $message }}</strong>
 		                                    </span>
@@ -158,7 +174,7 @@
 	                </div>
 		    	</div>
 		    </div>
-			
+
 		</form>
 	</div>
 @endsection
@@ -185,7 +201,7 @@
 			$('#select-user-picture').click(function () {
 				$('#file-user-picture').click();
 			});
-			
+
 			$('#file-user-picture').change(function () {
 				$('#user-picture').attr(
 					'src', window.URL.createObjectURL(this.files[0])
