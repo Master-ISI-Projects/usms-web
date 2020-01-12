@@ -16,6 +16,7 @@ Route::group(['prefix' => '{currentScholarYear}', 'middleware' => 'auth'], funct
 	    Route::resource('teachers', 'TeacherController');
 	    Route::resource('admins', 'AdminController');
 
+	    Route::resource('settings', 'SettingController');
 	    // Pages
 	    Route::get('dashboard', 'PagesController@dashboard')->name('admin.dashboard');
 	});

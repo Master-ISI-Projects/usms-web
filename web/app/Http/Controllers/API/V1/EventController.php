@@ -18,8 +18,6 @@ class EventController extends Controller
     {
         $events = Event::all();
 
-        return response()->json([
-            'events' => EventResource::collection($events)
-        ], 200);
+        return response()->json(EventResource::collection($events), 200);
     }
 }

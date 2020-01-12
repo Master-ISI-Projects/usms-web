@@ -17,9 +17,7 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::currentYear()->get();
-        // dd(\App\Helpers\Helper::getCurrentYearId());
-        return response()->json([
-            'news' => NewsResource::collection($news)
-        ], 200);
+
+        return response()->json(NewsResource::collection($news), 200);
     }
 }
