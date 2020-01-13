@@ -297,6 +297,37 @@
         </div>
     </div>
 </div>
+
+<div class="modal" id="modal-add-notification" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form method="post" action="{{ route('notifications.store') }}">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Nouvelle Notification</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="title">Titre</label>
+                        <input type="text" required class="form-control" name="title" id="title" placeholder="Titre">
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Contenu</label>
+                        <textarea name="content" id="content" class="form-control" cols="30" rows="10" placeholder="Contenu"></textarea>
+                    </div>
+                    <input type="hidden" name="classe_id" id="classe_id" value="{{ $classe->id }}">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button class="btn btn-sm btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('custom-stylesheet')
