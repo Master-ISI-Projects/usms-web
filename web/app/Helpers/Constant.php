@@ -33,4 +33,20 @@ class Constant
 	* Default date format
 	*/
 	public const DATE_FORMAT = 'd/m/Y';
+
+	/*
+	* Default exams sessions
+	*/
+	public const EXAM_SESSIONS = [
+		'Ordonaire',
+		'Rattrapage',
+	];
+
+	/*
+	* Default exams sessions
+	*/
+	public const EXAM_TYPES = [
+		'Controle',
+		'Examen Finale',
+	];
 }

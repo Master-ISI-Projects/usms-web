@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExamsTable extends Migration
+class AddClasseIdToTeacherModulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,9 @@ class CreateExamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('exams', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('type')->nullable();
-            $table->string('duration')->nullable();
-            $table->string('session')->nullable();
+        Schema::table('teacher_modules', function (Blueprint $table) {
             $table->bigInteger('classe_id')->unsigned()->nullable();
             $table->foreign('classe_id')->references('id')->on('classes')->onDelete('cascade');
-            $table->bigInteger('module_id')->unsigned()->nullable();
-            $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 
@@ -33,6 +26,8 @@ class CreateExamsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exams');
+        Schema::table('teacher_modules', function (Blueprint $table) {
+            //
+        });
     }
 }

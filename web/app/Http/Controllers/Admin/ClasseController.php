@@ -25,7 +25,9 @@ class ClasseController extends Controller
         return view('admin.classes.index', [
             'classes' => Classe::paginate(
                 Constant::COUNT_PER_PAGE
-            )
+            ),
+            'departements' => Departement::all(),
+            'options' => Option::all(),
         ]);
     }
 
@@ -68,15 +70,26 @@ class ClasseController extends Controller
     public function store(Request $request)
     {
         $classe = Classe::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'start_at' => Helper::parseDate($request->start_at),
-            'duration' => $request->duration,
-            'scholar_year_id' => $request->scholar_year_id,
-            'image' => Helper::saveFileFromRequest($request, 'image', null, 'classes_images')
+            'name' => $request->name,
+            'scholar_year_id' => Helper::getCurrentYearId(),
+            'option_id' => $request->option_id,
         ]);
 
-        dd($classe);
+        foreach ($request->students as $key => $student) {
+            if(!empty($student)) {
+                $classe->students()->attach($student);
+            }
+        }
+
+        foreach ($request->semesters as $key => $semester) {
+            if(!empty($semester)) {
+                $classe->semesters()->attach($semester);
+            }
+        }
+
+        dump($classe);
+        dump($classe->semesters);
+        dd($classe->students);
 
         session()->flash('success', 'Saved');
 

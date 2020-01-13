@@ -33,11 +33,11 @@
 	                    <div class="card-body text-center">
 	                        <h5 class="text-left">Photo</h5>
 	                        <div class="separator mb-4"></div>
-	                    	<img id="user-picture" class="img-circle" style="width: 150px; height: 150px;" src="http://localhost/lab/school-cours/public/assets/img/profile-pic-l.jpg" >
+	                    	<img id="user-picture" class="img-circle" style="width: 150px; height: 150px;" src="{{ asset('assets/img/profile-pic-l.png') }}" >
 	                    	<input type="file" class="hide" name="picture" id="file-user-picture">
 	                    </div>
 	                    <div class="card-footer bg-white">
-	                    	<button id="select-user-picture" type="button" class="btn btn-primary btn-block">Choisie une image</button>
+	                    	<button id="select-user-picture" type="button" class="btn btn-primary btn-block">Choisir une image</button>
 	                    </div>
 	                </div>
 
@@ -62,9 +62,9 @@
 	                        <div class="row">
 	                        	<div class="col-md-6">
 		                            <div class="form-group">
-		                                <label for="registration_number">N° de l'etudiant</label>
-		                                <input type="text" class="form-control @error('registration_number') is-invalid @enderror" name="registration_number" id="registration_number" value="{{ old('registration_number') }}" placeholder="N° de l'etudiant">
-		                            	@error('registration_number')
+		                                <label for="registration_number">N° d'apogee</label>
+		                                <input type="text" class="form-control @error('apogee_number') is-invalid @enderror" name="apogee_number" id="apogee_number" value="{{ old('apogee_number') }}" placeholder="N° d'apogee">
+		                            	@error('apogee_number')
 		                                    <span class="invalid-feedback" role="alert">
 		                                        <strong>{{ $message }}</strong>
 		                                    </span>
@@ -87,9 +87,8 @@
 		                            </div>
 	                        	</div>
 	                        </div>
-	                        
 	                        <div class="row">
-	                        	<div class="col-md-6">
+	                        	<div class="col-md-3">
 		                            <div class="form-group">
 		                                <label for="first_name">Nom</label>
 		                                <input type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" id="first_name" value="{{ old('first_name') }}" placeholder="Nom">
@@ -100,7 +99,7 @@
 		                                @enderror
 		                            </div>
 	                        	</div>
-	                        	<div class="col-md-6">
+	                        	<div class="col-md-3">
 		                            <div class="form-group">
 		                                <label for="last_name">Prénom</label>
 		                                <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" id="last_name" value="{{ old('last_name') }}" placeholder="Prénom">
@@ -111,8 +110,6 @@
 		                                @enderror
 		                            </div>
 	                        	</div>
-	                        </div>
-	                        <div class="row">
 	                        	<div class="col-md-6">
 		                            <div class="form-group">
 		                                <label for="birth_date">Date de naissance</label>
@@ -124,6 +121,19 @@
 		                                @enderror
 		                            </div>
 	                        	</div>
+	                        </div>
+	                        <div class="row">
+	                        	<div class="col-md-6">
+			                    	<div class="form-group">
+		                                <label for="email">E-mail</label>
+		                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}" placeholder="E-mail">
+		                            	@error('email')
+		                                    <span class="invalid-feedback" role="alert">
+		                                        <strong>{{ $message }}</strong>
+		                                    </span>
+		                                @enderror
+		                            </div>
+	                    		</div>
 	                        	<div class="col-md-6">
 		                            <div class="form-group">
 		                                <label for="tel">N° Tel</label>
@@ -161,13 +171,14 @@
 	                        	</div>
 	                        	<div class="col-md-3">
 			                    	<div class="form-group">
-		                                <label for="level_id">Niveau scolaire</label>
-		                                <select name="level_id" class="form-control select2 @error('level_id') is-invalid @enderror" id="level_id">
-		                                	@foreach ($levels as $level)
-		                                		<option {{ old('level_id') == $level->id ? 'selected' : '' }} value="{{ $level->id }}">{{ $level->title }}</option>
+		                                <label for="departement_id">Departement</label>
+		                                <select name="departement_id" class="form-control select2 @error('departement_id') is-invalid @enderror" id="departement_id">
+		                                	<option value="-1">----</option>
+		                                	@foreach ($departements as $departement)
+		                                		<option {{ old('departement_id') == $departement->id ? 'selected' : '' }} value="{{ $departement->id }}">{{ $departement->name }}</option>
 		                                	@endforeach
 		                                </select>
-		                            	@error('level_id')
+		                            	@error('departement_id')
 		                                    <span class="invalid-feedback" role="alert">
 		                                        <strong>{{ $message }}</strong>
 		                                    </span>
@@ -176,10 +187,10 @@
 	                        	</div>
 	                        	<div class="col-md-3">
 									<div class="form-group mb-0">
-		                                <label for="sub_level_id">Section</label>
-		                                <select name="sub_level_id" class="form-control @error('sub_level_id') is-invalid @enderror" id="sub_level_id">
+		                                <label for="option_id">Option</label>
+		                                <select name="option_id" class="form-control @error('option_id') is-invalid @enderror" id="option_id">
 		                                </select>
-		                            	@error('sub_level_id')
+		                            	@error('option_id')
 		                                    <span class="invalid-feedback" role="alert">
 		                                        <strong>{{ $message }}</strong>
 		                                    </span>
@@ -188,10 +199,10 @@
 	                        	</div>
 	                        	<div class="col-md-3">
 		                            <div class="form-group">
-		                                <label for="class_id">Classe</label>
-		                                <select name="class_id" class="form-control @error('class_id') is-invalid @enderror" id="class_id">
+		                                <label for="classe_id">Classe</label>
+		                                <select name="classe_id" class="form-control @error('classe_id') is-invalid @enderror" id="classe_id">
 		                                </select>
-		                            	@error('class_id')
+		                            	@error('classe_id')
 		                                    <span class="invalid-feedback" role="alert">
 		                                        <strong>{{ $message }}</strong>
 		                                    </span>
@@ -199,42 +210,13 @@
 		                            </div>
 	                        	</div>
 	                        </div>
-
-	                        <h5 class="mt-4">Accès à la plateforme</h5>
-	                    	<div class="separator mb-4"></div>
-	                    	<div class="row">
-	                    		<div class="col-md-6">
-			                    	<div class="form-group">
-		                                <label for="email">E-mail</label>
-		                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}" placeholder="E-mail">
-		                            	@error('email')
-		                                    <span class="invalid-feedback" role="alert">
-		                                        <strong>{{ $message }}</strong>
-		                                    </span>
-		                                @enderror
-		                            </div>
-	                    		</div>
-	                    		<div class="col-md-3">
-		                            <div class="form-group">
-		                                <label for="password">Mot de passe</label>
-		                                <input type="password" class="form-control" name="password" id="password" value="{{ old('password') }}" placeholder="Mot de passe">
-		                            </div>
-		                        </div>
-		                        <div class="col-md-3">
-		                            <div class="form-group mb-0">
-		                                <label for="password_confirmation">Confirmation</label>
-		                                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="Confirmation">
-		                            </div>
-	                    		</div>
-	                    	</div>
-
 							<div class="mt-4"></div>
                             <button type="submit" class="float-right btn btn-primary mb-0">Enregistrer</button>
 	                    </div>
 	                </div>
 		    	</div>
 		    </div>
-			
+
 		</form>
 	</div>
 @endsection
@@ -250,47 +232,47 @@
 @section('custom-javascript')
 	<script type="text/javascript">
 		$(document).ready(function () {
-			//init 
-			var allLevels = @json($levels);
-			var allSubLevels = @json($subLevels);
+			//init
+			var allLevels = @json($departements);
+			var allOptions = @json($options);
 			var allClasses = @json($classes);
 
 			// Events
-			$('#level_id').change(function () {
-				$('#sub_level_id, #class_id').html('');
-				var level = $(this).val();
-				var subLevels = allSubLevels.filter(function (subLevel) {
-					return level == subLevel.level_id;
+			$('#departement_id').change(function () {
+				$('#option_id, #classe_id').html('');
+				var departement = $(this).val();
+				var options = allOptions.filter(function (subLevel) {
+					return departement == subLevel.departement_id;
 				});
-				
-				loadSelect('sub_level_id', subLevels);
+
+				loadSelect('option_id', options);
 			});
 
-			$('#sub_level_id, #scholar_year_id').on('change click', function () {
-				var subLevel = $('#sub_level_id').val();
+			$('#option_id, #scholar_year_id').on('change click', function () {
+				var subLevel = $('#option_id').val();
 				var scholarYear = $('#scholar_year_id').val();
 				var classes = allClasses.filter(function (classe) {
-					return subLevel == classe.sub_level_id && scholarYear == classe.scholar_year_id;
+					return subLevel == classe.option_id && scholarYear == classe.scholar_year_id;
 				});
-				
-				loadSelect('class_id', classes);
+
+				loadSelect('classe_id', classes);
 			});
 
 			$('#select-user-picture').click(function () {
 				$('#file-user-picture').click();
 			});
-			
+
 			$('#file-user-picture').change(function () {
 				$('#user-picture').attr(
 					'src', window.URL.createObjectURL(this.files[0])
 				);
 			});
 
-			// Helpers : 
+			// Helpers :
 			function loadSelect(tragetSelectId, items = []) {
-				var options = '';
+				var options = '<option value="-1">----</option>';
 				for (var i = 0; i < items.length; i++) {
-					options += '<option value="' + items[i].id + '">' + items[i].title + '</option>';
+					options += '<option value="' + items[i].id + '">' + items[i].name + '</option>';
 				}
 
 				$('#' + tragetSelectId).html(options);

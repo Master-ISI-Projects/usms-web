@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property integer $id
  * @property integer $scholar_year_id
+ * @property integer $option_id
  * @property string $name
  * @property string $created_at
  * @property string $updated_at
@@ -29,7 +30,13 @@ class Classe extends Model
     /**
      * @var array
      */
-    protected $fillable = ['scholar_year_id', 'name', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'scholar_year_id',
+        'option_id',
+        'name',
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -37,6 +44,14 @@ class Classe extends Model
     public function scholarYear()
     {
         return $this->belongsTo(ScholarYear::class, 'scholar_year_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function option()
+    {
+        return $this->belongsTo(Option::class, 'option_id');
     }
 
     /**
@@ -50,7 +65,7 @@ class Classe extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function semestres()
+    public function semesters()
     {
         return $this->belongsToMany(Semester::class, 'class_semestres')
                     ->as('class_semestres')
@@ -81,5 +96,10 @@ class Classe extends Model
         return $this->belongsToMany(Student::class, 'registrations')
                     ->as('registrations')
                     ->withPivot('student_id', 'classe_id');
+    }
+
+    public function examsByModuleId($moduleId)
+    {
+        return $this->exams()->where('module_id', $moduleId);
     }
 }

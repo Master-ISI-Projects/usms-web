@@ -1,61 +1,47 @@
 @extends('layouts.master')
 
-@section('title', 'Classe')
+@section('title', $classe->name)
 
 @section('content')
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
             <div class="mb-2">
-                <h1>{{ $classe->title }}</h1>
-                <div class="text-zero top-right-button-container">
-                    <button type="button" class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split top-right-button top-right-button-single" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    ACTIONS
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-add-module">Ajouter Nouveau Module</a>
-                        <a class="dropdown-item" href="#">Affecter Etudiant</a>
-                    </div>
-                </div>
+                <h1>{{ $classe->name }}</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
-                            <a href="#">Home</a>
+                            <a href="{{ url('/') }}">Tableau de board</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="#">Library</a>
+                            <a href="{{ route('classes.index') }}">Classes</a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Data</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ $classe->name }}</li>
                     </ol>
                 </nav>
                 <div class="mb-2"></div>
             </div>
-            
+
             <div class="row">
                 <div class="col-12 col-lg-5 col-xl-4 col-left">
                     <div class="card mb-4">
-                        <div class="position-absolute card-top-buttons">
-                            <button class="btn btn-outline-primary btn-sm icon-button" data-toggle="modal" data-target="#modal-edit-classe">
-                                <i class="simple-icon-pencil"></i>
-                            </button>
-                        </div>
                         <div class="card-body">
-                            <h4>{{ $classe->title }}</h4>
+                            <h4>{{ $classe->name }}</h4>
                             <div class="separator"></div>
-                            <p class="text-muted text-small mb-2 mt-3">Niveau scolaire</p>
-                            <p class="mb-3">{{ $classe->subLevel->level->title }}</p>
+                            <p class="text-muted text-small mb-2 mt-3">Departement</p>
+                            <p class="mb-3">{{ $classe->option->departement->name }}</p>
                             <div class="separator"></div>
-                            <p class="text-muted text-small mb-2 mt-3">Section</p>
-                            <p class="mb-3">{{ $classe->subLevel->title }}</p>
+                            <p class="text-muted text-small mb-2 mt-3">Option</p>
+                            <p class="mb-3">{{ $classe->option->name }}</p>
                             <div class="separator"></div>
-                            <p class="text-muted text-small mb-2 mt-3">Annee scolaire</p>
+                            <p class="text-muted text-small mb-2 mt-3">Année scolaire</p>
                             <p class="mb-0">{{ $classe->scholarYear->scholar_year }}</p>
                         </div>
                     </div>
                     <div class="card mb-4">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <h6 class="mb-0 w-100 text-uppercase">
-                                Etudiants 
+                                Etudiants
                                     <span class="float-right text-muted text-primary">{{ $classe->students()->count() }}</span>
                             </h6>
                         </div>
@@ -63,8 +49,8 @@
                     <div class="card mb-4">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <h6 class="mb-0 w-100 text-uppercase">
-                                Modules 
-                                <span class="float-right text-muted text-primary">{{ $classe->modules()->count() }}</span>
+                                Semestres
+                                <span class="float-right text-muted text-primary">{{ $classe->semesters()->count() }}</span>
                             </h6>
                         </div>
                     </div>
@@ -75,10 +61,10 @@
                             <a class="nav-link active text-uppercase" id="first-tab" data-toggle="tab" href="#students-tab" role="tab" aria-controls="first" aria-selected="true">Etudiants</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-uppercase" id="second-tab" data-toggle="tab" href="#modules-tab" role="tab" aria-controls="second" aria-selected="false">Modules</a>
+                            <a class="nav-link text-uppercase" id="second-tab" data-toggle="tab" href="#semesters-tab" role="tab" aria-controls="second" aria-selected="false">Semestres</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-uppercase" id="second-tab" data-toggle="tab" href="#calendar-tab" role="tab" aria-controls="second" aria-selected="false">Emploi du temps</a>
+                            <a class="nav-link text-uppercase" id="second-tab" data-toggle="tab" href="#marks-tab" role="tab" aria-controls="second" aria-selected="false">Notes des étudiants</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -96,7 +82,7 @@
                                                         <a href="{{ route('students.show', ['id' => $student->id]) }}">
                                                             <p class="list-item-heading mb-1 truncate">{{ $student->user->full_name }}</p>
                                                         </a>
-                                                        <p class="mb-3 text-muted text-small">{{ $student->registration_number }}</p>
+                                                        <p class="mb-3 text-muted text-small">{{ $student->apogee_number }}</p>
                                                         {!! $student->user->is_active_badge !!}
                                                     </div>
                                                 </div>
@@ -108,60 +94,75 @@
                                 @endforelse
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="modules-tab" role="tabpanel" aria-labelledby="modules-tab">
+                        <div class="tab-pane fade" id="semesters-tab" role="tabpanel" aria-labelledby="semesters-tab">
                             <div class="sortable-survey">
-                                @foreach ($classe->modules as $module)
+                                @foreach ($classe->semesters as $semester)
                                     <div class="sub-level">
                                         <div class="card card-panel question d-flex mb-4 edit-quesiton">
                                             <div class="d-flex flex-grow-1 min-width-zero">
                                                 <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
                                                     <div class="list-item-heading mb-0 truncate w-80 mb-1 mt-1">
-                                                        <span class="log-indicator border-theme-1 mr-1" style="border-color: {{ $module->color }} !important"></span>
                                                         <span class="text-uppercase">
-                                                            {{ $module->title }}
+                                                            {{ $semester->name }}
                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div class=" pl-1 align-self-center pr-4">
-                                                    <button class="btn btn-outline-theme-3 icon-button btn-edit-module" 
-                                                            data-module-id="{{ $module->id }}" 
-                                                            data-module-title="{{ $module->title }}"
-                                                            data-module-color="{{ $module->color }}"
-                                                            data-module-url-update="{{ route('modules.update', ['id' => $module->id]) }}"
-                                                            data-module-url-delete="{{ route('modules.destroy', ['id' => $module->id]) }}">
-                                                        <i class="simple-icon-pencil"></i>
-                                                    </button>
-                                                    <button class="btn btn-outline-theme-3 icon-button rotate-icon-click rotate" type="button" data-toggle="collapse" data-target="#{{ $module->id }}" aria-expanded="true" aria-controls="{{ $module->id }}">
+                                                    <button class="btn btn-outline-theme-3 icon-button rotate-icon-click rotate" type="button" data-toggle="collapse" data-target="#{{ $semester->id }}" aria-expanded="true" aria-controls="{{ $semester->id }}">
                                                         <i class="simple-icon-arrow-down with-rotate-icon"></i>
                                                     </button>
                                                 </div>
                                             </div>
-                                            <div class="question-collapse collapse" id="{{ $module->id }}">
+                                            <div class="question-collapse collapse" id="{{ $semester->id }}">
                                                 <div class="card-body pt-0">
-                                                    <div class="border-bottom mb-3"></div>
-                                                    @foreach ($module->courses as $course)
-                                                        <div class="d-flex flex-row pb-3 {!! $loop->last ? '' : 'border-bottom mb-3' !!} justify-content-between align-items-center">
-                                                            <div class="pl-3 flex-fill">
-                                                                <a href="{{ route('courses.show', ['id' => $course->id]) }}">
-                                                                    <p class="font-weight-semibold text-primary mb-0">{{ $course->title }}</p>
-                                                                    <p class="text-muted mb-3 mt-1 text-small">
-                                                                        {{ substr($course->description, 0, 50) }}
-                                                                    </p>
-                                                                    <p class="text-muted mb-0 mt-1 text-small">
-                                                                        <b>Publier le : </b>
-                                                                        {{ Helper::formatDate($course->published_at, 'd.m.Y à h:i') }}
-                                                                    </p>
-                                                                    <p class="text-muted mb-0 mt-1 text-small">
-                                                                        <b>Enseignant : </b>
-                                                                        {{ $course->teacher->user->full_name }}
-                                                                    </p>
-                                                                </a>
+                                                    <div id="accordion">
+                                                        @foreach ($semester->modules as $module)
+                                                            <div class="border mb-2">
+                                                                <div class="alert alert-dark mb-0">
+                                                                    <span class="cursor-pointer" data-toggle="collapse" data-target="#collapse-{{ $module->id }}" aria-expanded="true" aria-controls="collapse-{{ $module->id }}">{{ $module->name }}</span>
+                                                                    <span class="float-right">
+                                                                        <button class="header-icon btn btn-empty text-primary p-0 mr-2 btn-add-exam"
+                                                                                data-module-id="{{ $module->id }}"
+                                                                                data-module-name="{{ $module->name }}"
+                                                                                data-module-id="{{ $module->id }}"
+                                                                                data-classe-name="{{ $classe->name }}"
+                                                                                data-classe-id="{{ $classe->id }}"
+                                                                                type="button">
+                                                                            <i class="iconsminds-add"></i>
+                                                                        </button>
+                                                                        <button class="header-icon btn btn-empty text-bold text-primary p-0 btn-edit-exam"
+                                                                                data-module-id="{{ $module->id }}"
+                                                                                data-module-name="{{ $module->name }}"
+                                                                                data-module-id="{{ $module->id }}"
+                                                                                data-classe-name="{{ $classe->name }}"
+                                                                                data-classe-id="{{ $classe->id }}"
+                                                                                type="button">
+                                                                            <i class="simple-icon-settings"></i>
+                                                                        </button>
+                                                                    </span>
+                                                                </div>
+                                                                <div id="collapse-{{ $module->id }}" class="collapse" data-parent="#accordion" style="">
+                                                                    <ul class="list-group b-rad-0">
+                                                                        @foreach ($classe->examsByModuleId($module->id)->get() as $exam)
+                                                                            <li class="list-group-item">
+                                                                                <span>{{ $exam->name }}</span>
+                                                                                <span class="float-right">
+                                                                                    <button class="header-icon btn btn-empty text-danger p-0 btn-edit-exam"
+                                                                                            data-exam-id="{{ $exam->id }}"
+                                                                                            data-exam-name="{{ $exam->name }}"
+                                                                                            data-exam-url-update="{{ route('exams.update', ['id' => $exam->id]) }}"
+                                                                                            data-exam-url-delete="{{ route('exams.destroy', ['id' => $exam->id]) }}"
+                                                                                            type="button">
+                                                                                        {{-- <i class="simple-icon-settings"></i> --}}
+                                                                                    </button>
+                                                                                </span>
+                                                                            </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
                                                             </div>
-                                                            <div>
-                                                                <a class="btn btn-outline-success btn-xs" href="{{ route('courses.show', ['id' => $course->id]) }}">Details</a>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
+                                                        @endforeach
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -169,13 +170,76 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="calendar-tab" role="tabpanel" aria-labelledby="calendar-tab">
-                            <div class="row">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <course-calendar :class-id="{{ $classe->id }}"></course-calendar>
+                        <div class="tab-pane fade" id="marks-tab" role="tabpanel" aria-labelledby="marks-tab">
+                            <div class="sortable-survey">
+                                @foreach ($classe->students as $student)
+                                    <div class="sub-level">
+                                        <div class="card card-panel question d-flex mb-4 edit-quesiton">
+                                            <div class="d-flex flex-grow-1 min-width-zero">
+                                                <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+                                                    <div class="list-item-heading mb-0 truncate w-80 mb-1 mt-1">
+                                                        <span class="text-uppercase">
+                                                            {{ $student->user->full_name }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class=" pl-1 align-self-center pr-4">
+                                                    <button class="btn btn-outline-theme-3 icon-button rotate-icon-click rotate" type="button" data-toggle="collapse" data-target="#tab-marks-{{ $student->id }}" aria-expanded="true" aria-controls="tab-marks-{{ $student->id }}">
+                                                        <i class="simple-icon-arrow-down with-rotate-icon"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="question-collapse collapse" id="tab-marks-{{ $student->id }}">
+                                                <div class="card-body pt-0">
+                                                   <div id="accordion">
+                                                        @foreach ($semester->modules as $module)
+                                                            <div class="border mb-2">
+                                                                <div class="alert alert-danger mb-0">
+                                                                    <span class="cursor-pointer" data-toggle="collapse" data-target="#collapse-marks-{{ $module->id . $student->id }}" aria-expanded="true" aria-controls="collapse-marks-{{ $module->id . $student->id }}">{{ $module->name }}</span>
+                                                                </div>
+                                                                <div id="collapse-marks-{{ $module->id . $student->id }}" class="collapse" data-parent="#accordion" style="">
+                                                                    <form action="{{ route('marks.store') }}" method="post">
+                                                                        @csrf
+                                                                        <input type="hidden" name="classe_id" value="{{ $classe->id }}">
+                                                                        <input type="hidden" name="module_id" value="{{ $module->id }}">
+                                                                        <ul class="list-group b-rad-0">
+                                                                            @foreach ($module->exams as $exam)
+                                                                            <input type="hidden" name="exam_id" value="{{ $exam->id }}">
+                                                                                <li class="list-group-item">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-4 pt-2">
+                                                                                            <b>{{ $exam->name }}</b>
+                                                                                        </div>
+                                                                                        <div class="col-md-8">
+                                                                                            <input type="text" class="form-control" name="marks[]" placeholder=" Note ...">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                            @endforeach
+                                                                            <li class="list-group-item">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-4 pt-2">
+                                                                                        <b class="text-danger">Note de module</b>
+                                                                                    </div>
+                                                                                    <div class="col-md-8">
+                                                                                        <input type="text" class="form-control" name="general_note" placeholder=" Note de module ...">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="list-group-item">
+                                                                                <button class="btn default btn-danger float-right">Enregistrer</button>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -186,75 +250,44 @@
 </div>
 
 {{-- Modals --}}
-<div class="modal" id="modal-edit-classe" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal" id="modal-add-exam" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="post" action="{{ route('classes.update', ['id' => $classe->id]) }}">
+            <form method="post" action="{{ route('exams.store') }}">
                 @csrf
-                @method('PUT')
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title">Classe : {{ $classe->title }}</h5>
+                    <h5 class="modal-title" id="modal-title">Nouveau Examen : <span id="module_name"></span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="title">Titre</label>
-                        <input type="text" required class="form-control" name="title" id="title" placeholder="Titre" value="{{ $classe->title }}">
+                        <label for="name">Examen</label>
+                        <input type="text" required class="form-control" name="name" id="name" placeholder="Examen">
                     </div>
                     <div class="form-group">
-                        <label for="level_id">Niveau scolaire</label>
-                        <select name="level_id" required class="form-control select2" id="level_id">
-                            @foreach ($levels as $level)
-                                <option {{ $classe->subLevel->level->id == $level->id ? 'selected' : '' }} value="{{ $level->id }}">{{ $level->title }}</option>
+                        <label for="duration">Durée</label>
+                        <input type="text" required class="form-control" name="duration" id="duration" placeholder="Durée">
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <select name="type" class="form-control" id="type">
+                            @foreach (Constant::EXAM_TYPES as $type)
+                                <option {{ old('type') == $type ? 'selected' : '' }} value="{{ $type }}">{{ $type }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group mb-0">
-                        <label for="sub_level_id">Section</label>
-                        <select name="sub_level_id" class="form-control" id="sub_level_id">
-                            @foreach ($classe->subLevel->level->subLevels as $subLevel)
-                                <option {{ $subLevel->id == $classe->subLevel->id ? 'selected' : '' }} value="{{ $subLevel->id }}">{{ $subLevel->title }}</option>
+                    <div class="form-group">
+                        <label for="session">Session</label>
+                        <select name="session" class="form-control" id="session">
+                            @foreach (Constant::EXAM_SESSIONS as $session)
+                                <option {{ old('session') == $session ? 'selected' : '' }} value="{{ $session }}">{{ $session }}</option>
                             @endforeach
                         </select>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="btn-delete-sublevel" class="btn btn-sm btn-outline-danger mr-auto">Supprimer</button>
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button class="btn btn-sm btn-primary">Enregistrer</button>
-                </div>
-            </form>
-            <form id="form-delete-sublevel" method="post">
-                @csrf
-                @method('DELETE')
-            </form>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="modal-add-module" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <form method="post" action="{{ route('modules.store') }}">
-                @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title">Nouveau module</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="title">Titre</label>
-                        <input type="text" required class="form-control" name="title" id="title" placeholder="Titre">
-                    </div>
-                    <div class="form-group">
-                        <label for="title">Coleur</label>
-                        <input type="color" required name="color">
-                    </div>
-                    <input type="hidden" required name="classe_id" value="{{ $classe->id }}">
+                    <input type="hidden" required name="module_id" id="module_id">
+                    <input type="hidden" required name="classe_id" id="classe_id">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Fermer</button>
@@ -264,54 +297,6 @@
         </div>
     </div>
 </div>
-
-<div class="modal" id="modal-edit-module" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <form method="post">
-                @csrf
-                @method('PUT')
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title">Edite Module</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="title">Titre</label>
-                        <input type="text" required class="form-control" name="title" id="title" placeholder="Titre">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="title">Coleur</label>
-                        <input type="color" required name="color" id="color">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="btn-delete-module" class="btn btn-sm btn-outline-danger mr-auto">Supprimer</button>
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button class="btn btn-sm btn-primary">Enregistrer</button>
-                </div>
-            </form>
-            <form id="form-delete-module" method="post">
-                @csrf
-                @method('DELETE')
-            </form>
-        </div>
-    </div>
-</div>
-{{-- /.Modals --}}
-@endsection
-
-@section('plugin-stylesheet')
-    <link rel="stylesheet" href="{{ asset('assets/css/vendor/fullcalendar.min.css') }}">
-@endsection
-
-@section('plugin-javascript')
-    <script src="{{ asset('assets/js/vendor/moment.min.js') }}"></script>
-    <script src="{{ asset('assets/js/vendor/fullcalendar.min.js') }}"></script>
-    <script src="{{ asset('assets/js/vendor/locale-all.js') }}"></script>
 @endsection
 
 @section('custom-stylesheet')
@@ -325,44 +310,14 @@
 @section('custom-javascript')
     <script type="text/javascript">
         $(document).ready(function () {
-            //init 
-            var allLevels = @json($levels);
-            var allSubLevels = @json($subLevels);
-
             // Events
-            $('#level_id').on('change click', function () {
-                $('#sub_level_id').html('');
-                var level = $(this).val();
-                var subLevels = allSubLevels.filter(function (subLevel) {
-                    return level == subLevel.level_id;
-                });
-                
-                loadSelect('sub_level_id', subLevels);
-            });
-
-            $('.btn-edit-module').click(function () {
-                var modal = $('#modal-edit-module');
-                modal.find('#modal-title').text('Module: ' + $(this).data('module-title'));
-                modal.find('#title').val($(this).data('module-title'));
-                modal.find('#color').val($(this).data('module-color'));
-                modal.find('form').attr('action', $(this).data('module-url-update'));
-                modal.find('#form-delete-module').attr('action', $(this).data('module-url-delete'));
+            $('.btn-add-exam').click(function () {
+                var modal = $('#modal-add-exam');
+                modal.find('#module_id').val($(this).data('module-id'));
+                modal.find('#module_name').text($(this).data('module-name'));
+                modal.find('#classe_id').val($(this).data('classe-id'));
                 modal.modal();
             });
-
-            $('#btn-delete-module').click(function () {
-                $('#form-delete-module').submit();
-            });
-
-            // Helpers : 
-            function loadSelect(tragetSelectId, items = []) {
-                var options = '';
-                for (var i = 0; i < items.length; i++) {
-                    options += '<option value="' + items[i].id + '">' + items[i].title + '</option>';
-                }
-
-                $('#' + tragetSelectId).html(options);
-            }
-        })
+        });
     </script>
 @endsection

@@ -20,19 +20,16 @@
                             <div class="pl-2 d-flex flex-grow-1 min-width-zero">
                                 <div class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                                     <a href="{{ route('classes.show', ['id' => $classe->id]) }}" class="w-20 w-sm-100">
-                                        <p class="list-item-heading mb-1 truncate">{{ $classe->title }}</p>
+                                        <p class="list-item-heading mb-1 truncate">{{ $classe->name }}</p>
                                     </a>
                                     <div class="text-center text-muted w-15 w-sm-100">
-                                        {{ $classe->subLevel->level->title }}
+                                        <a class="text-muted" href="{{ route('departements.show', ['id' => $classe->option->departement_id]) }}">{{ $classe->option->departement->name }}</a>
                                     </div>
-                                    <div class="text-center text-muted w-15 w-sm-100">
-                                        {{ $classe->subLevel->title }}
+                                    <div class="text-center text-muted w-35 w-sm-100">
+                                        {{ $classe->option->name }}
                                     </div>
                                     <p class="mb-1 text-muted text-small text-center w-15 w-sm-100">
-                                        {{ $classe->scholarYear->scholar_year }}
-                                    </p>
-                                    <p class="mb-1 text-muted text-small text-center w-15 w-sm-100">
-                                        {{ $classe->students()->count() }} Etudiants
+                                        <span class="badge badge-primary">{{ $classe->students()->count() }} Etudiants</span>
                                     </p>
                                     <div class="btn-group mb-1">
                                         <button class="btn btn-xs btn-danger dropdown-toggle btn-toggle-without-icon" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -57,7 +54,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
     {{-- End listing of data --}}
 
     {{-- Start filter menu --}}
@@ -68,22 +65,22 @@
                     <h5 class="mb-3 mt-3">Filtrer</h5>
                     <div class="separator mb-4"></div>
                     <div class="form-group">
-                        <label class="text-muted text-small" for="level_id">Titre</label>
-                        <input type="text" name="title" class="form-control" placeholder="Classe 1..." value="{{ request()->get('title') }}">
+                        <label class="text-muted text-small" for="name">Titre</label>
+                        <input type="text" name="name" class="form-control" placeholder="Classe 1..." value="{{ request()->get('name') }}">
                     </div>
                     <div class="form-group">
-                        <label class="text-muted text-small" for="level_id">Niveau scolaire</label>
-                        <select name="level_id" class="form-control select2" id="level_id">
+                        <label class="text-muted text-small" for="departement_id">Departement</label>
+                        <select name="departement_id" class="form-control select2" id="departement_id">
                             <option value="-1">-- Tout --</option>
-                            @foreach ($levels as $level)
-                                <option value="{{ $level->id }}">{{ $level->title }}</option>
+                            @foreach ($departements as $departement)
+                                <option value="{{ $departement->id }}">{{ $departement->name }}</option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label class="text-muted text-small" for="sub_level_id">Section</label>
-                        <select name="sub_level_id" class="form-control" id="sub_level_id">
+                        <label class="text-muted text-small" for="option_id">Option</label>
+                        <select name="option_id" class="form-control" id="option_id">
                             <option value="-1">-- Tout --</option>
                         </select>
                     </div>
@@ -102,28 +99,28 @@
 @section('custom-javascript')
     <script type="text/javascript">
         $(document).ready(function () {
-            //init 
-            var allLevels = @json($levels);
-            var allSubLevels = @json($subLevels);
+            //init
+            var allLevels = @json($departements);
+            var allOptions = @json($options);
 
             // Events
-            $('#level_id').change(function () {
-                var level = $(this).val();
-                if(level != -1) {
-                    $('#sub_level_id').html('');
-                    var subLevels = allSubLevels.filter(function (subLevel) {
-                        return level == subLevel.level_id;
+            $('#departement_id').change(function () {
+                var departement = $(this).val();
+                if(departement != -1) {
+                    $('#option_id').html('');
+                    var options = allOptions.filter(function (option) {
+                        return departement == option.departement_id;
                     });
-                    
-                    loadSelect('sub_level_id', subLevels);
+
+                    loadSelect('option_id', options);
                 }
             });
 
-            // Helpers : 
+            // Helpers :
             function loadSelect(tragetSelectId, items = []) {
                 var options = '<option value="-1">-- Tout --</option>';
                 for (var i = 0; i < items.length; i++) {
-                    options += '<option value="' + items[i].id + '">' + items[i].title + '</option>';
+                    options += '<option value="' + items[i].id + '">' + items[i].name + '</option>';
                 }
 
                 $('#' + tragetSelectId).html(options);

@@ -38,7 +38,7 @@
 	                    	<input type="file" class="hide" name="picture" id="file-user-picture">
 	                    </div>
 	                    <div class="card-footer bg-white">
-	                    	<button id="select-user-picture" type="button" class="btn btn-primary btn-block">Choisie une image</button>
+	                    	<button id="select-user-picture" type="button" class="btn btn-primary btn-block">Changer l'image</button>
 	                    </div>
 	                </div>
 
@@ -63,9 +63,9 @@
 	                        <div class="row">
 	                        	<div class="col-md-6">
 		                            <div class="form-group">
-		                                <label for="registration_number">N° de l'etudiant</label>
-		                                <input type="text" class="form-control @error('registration_number') is-invalid @enderror" name="registration_number" id="registration_number" value="{{ old('registration_number', $student->registration_number) }}" placeholder="N° de l'etudiant">
-		                            	@error('registration_number')
+		                                <label for="apogee_number">N° d'apogee</label>
+		                                <input type="text" class="form-control @error('apogee_number') is-invalid @enderror" name="apogee_number" id="apogee_number" value="{{ old('apogee_number', $student->apogee_number) }}" placeholder="N° d'apogee">
+		                            	@error('apogee_number')
 		                                    <span class="invalid-feedback" role="alert">
 		                                        <strong>{{ $message }}</strong>
 		                                    </span>
@@ -88,9 +88,9 @@
 		                            </div>
 	                        	</div>
 	                        </div>
-	                        
+
 	                        <div class="row">
-	                        	<div class="col-md-6">
+	                        	<div class="col-md-3">
 		                            <div class="form-group">
 		                                <label for="first_name">Nom</label>
 		                                <input type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" id="first_name" value="{{ old('first_name', $student->user->first_name) }}" placeholder="Nom">
@@ -101,7 +101,7 @@
 		                                @enderror
 		                            </div>
 	                        	</div>
-	                        	<div class="col-md-6">
+	                        	<div class="col-md-3">
 		                            <div class="form-group">
 		                                <label for="last_name">Prénom</label>
 		                                <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" id="last_name" value="{{ old('last_name', $student->user->last_name) }}" placeholder="Prénom">
@@ -112,6 +112,17 @@
 		                                @enderror
 		                            </div>
 	                        	</div>
+	                        	<div class="col-md-6">
+							    	<div class="form-group">
+							            <label for="email">E-mail</label>
+							            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email', $student->user->email) }}" placeholder="E-mail">
+							        	@error('email')
+							                <span class="invalid-feedback" role="alert">
+							                    <strong>{{ $message }}</strong>
+							                </span>
+							            @enderror
+							        </div>
+								</div>
 	                        </div>
 	                        <div class="row">
 	                        	<div class="col-md-6">
@@ -137,38 +148,6 @@
 		                            </div>
 	                        	</div>
 	                        </div>
-                            <div class="form-group">
-                                <label for="address">Adresse</label>
-                                <textarea class="form-control" name="address" id="address" cols="30" rows="3" placeholder="Adresse">{{ old('address', $student->address) }}</textarea>
-                            </div>
-                            
-							<h5 class="mt-4">Accès à la plateforme</h5>
-							<div class="separator mb-4"></div>
-							<div class="row">
-								<div class="col-md-6">
-							    	<div class="form-group">
-							            <label for="email">E-mail</label>
-							            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email', $student->user->email) }}" placeholder="E-mail">
-							        	@error('email')
-							                <span class="invalid-feedback" role="alert">
-							                    <strong>{{ $message }}</strong>
-							                </span>
-							            @enderror
-							        </div>
-								</div>
-								<div class="col-md-3">
-							        <div class="form-group">
-							            <label for="password">Mot de passe</label>
-							            <input type="password" class="form-control" name="password" id="password" value="{{ old('password') }}" placeholder="Mot de passe">
-							        </div>
-								</div>
-								<div class="col-md-3">
-							        <div class="form-group">
-							            <label for="password_confirmation">Confirmation</label>
-							            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="Confirmation">
-							        </div>
-								</div>
-							</div>
 
 							<div class="mt-4"></div>
                             <button type="submit" class="float-right btn btn-primary mb-0">Enregistrer</button>
@@ -176,7 +155,7 @@
 	                </div>
 		    	</div>
 		    </div>
-			
+
 		</form>
 	</div>
 @endsection
@@ -200,51 +179,15 @@
 @section('custom-javascript')
 	<script type="text/javascript">
 		$(document).ready(function () {
-			//init 
-			var allLevels = @json($levels);
-			var allSubLevels = @json($subLevels);
-			var allClasses = @json($classes);
-
-			// Events
-			$('#level_id').change(function () {
-				$('#sub_level_id, #class_id').html('');
-				var level = $(this).val();
-				var subLevels = allSubLevels.filter(function (subLevel) {
-					return level == subLevel.level_id;
-				});
-				
-				loadSelect('sub_level_id', subLevels);
-			});
-
-			$('#sub_level_id, #scholar_year_id').on('change click', function () {
-				var subLevel = $('#sub_level_id').val();
-				var scholarYear = $('#scholar_year_id').val();
-				var classes = allClasses.filter(function (classe) {
-					return subLevel == classe.sub_level_id && scholarYear == classe.scholar_year_id;
-				});
-				
-				loadSelect('class_id', classes);
-			});
-
 			$('#select-user-picture').click(function () {
 				$('#file-user-picture').click();
 			});
-			
+
 			$('#file-user-picture').change(function () {
 				$('#user-picture').attr(
 					'src', window.URL.createObjectURL(this.files[0])
 				);
 			});
-
-			// Helpers : 
-			function loadSelect(tragetSelectId, items = []) {
-				var options = '';
-				for (var i = 0; i < items.length; i++) {
-					options += '<option value="' + items[i].id + '">' + items[i].title + '</option>';
-				}
-
-				$('#' + tragetSelectId).html(options);
-			}
 		})
 	</script>
 @endsection

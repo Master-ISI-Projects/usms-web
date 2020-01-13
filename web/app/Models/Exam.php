@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $id
  * @property integer $classe_id
  * @property integer $module_id
+ * @property string $name
  * @property string $type
- * @property float $duration
+ * @property string $duration
  * @property string $session
  * @property string $created_at
  * @property string $updated_at
@@ -32,6 +33,7 @@ class Exam extends Model
     protected $fillable = [
         'classe_id',
         'module_id',
+        'name',
         'type',
         'duration',
         'session',
@@ -44,7 +46,7 @@ class Exam extends Model
      */
     public function classe()
     {
-        return $this->belongsTo(Classe:class, 'classe_id');
+        return $this->belongsTo(Classe::class, 'classe_id');
     }
 
     /**

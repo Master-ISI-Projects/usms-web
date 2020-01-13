@@ -4,24 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Level;
-use App\Models\SubLevel;
+use App\Models\Exam;
 
-class LevelController extends Controller
+class ExamController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('admin.levels.index', [
-            'levels' => Level::all(),
-            'subLevels' => SubLevel::all(),
-        ]);
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -30,7 +16,9 @@ class LevelController extends Controller
      */
     public function store(Request $request)
     {
-        Level::create($request->only('title'));
+        Exam::create(
+            $request->only('name', 'type', 'session', 'duration', 'module_id', 'classe_id')
+        );
 
         session()->flash('success', 'Saved');
 
@@ -46,10 +34,10 @@ class LevelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $level = Level::findOrFail($id);
+        $module = Exam::findOrfail($id);
 
-        $level->update(
-            $request->only('title')
+        $module->update(
+            $request->only('name')
         );
 
         session()->flash('success', 'Updated');
@@ -65,11 +53,12 @@ class LevelController extends Controller
      */
     public function destroy($id)
     {
-        $level = Level::findOrFail($id);
-        $level->delete();
+        $module = Exam::findOrfail($id);
+
+        $module->delete();
 
         session()->flash('success', 'Deleted');
-        
+
         return redirect()->back();
     }
 }

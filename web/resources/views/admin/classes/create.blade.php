@@ -104,11 +104,11 @@
 	                    	</table>
                             <h5>Semestres</h5>
                             <div class="separator mb-2"></div>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="semesters-table">
                                 <tbody>
-                                    <tr>
+                                    <tr id="semester-row">
                                         <td width="80%">
-                                            <select name="semesters[]" class="form-control select2-single">
+                                            <select name="semesters[]" class="form-control semester-select">
                                                 @foreach ($semesters as $semester)
                                                     <option value="{{ $semester->id }}">{{ $semester->name }}</option>
                                                 @endforeach
@@ -161,10 +161,11 @@
             var allDepartements = @json($departements);
             var allOptions = @json($options);
             var allSemesters = @json($semesters);
+            var semesterSelectValues = @json($semesters);
+            loadSelect('.semester-select', semesterSelectValues);
 
             // Events
             $('#departement_id').change(function () {
-                console.log($(this).val())
                 $('#option_id').html('');
                 var departement = $(this).val();
                 if(departement != -1) {
@@ -172,34 +173,31 @@
                         return departement == option.departement_id;
                     });
 
-                    loadSelect('option_id', options);
+                    loadSelect('#option_id', options);
                 }
             });
 
-            $('#option_id').change(function () {
-                $('#option_id').html('');
-                var departement = $(this).val();
-                if(departement != -1) {
-                    var options = allOptions.filter(function (option) {
-                        return departement == option.departement_id;
-                    });
+            $('#option_id, #departement_id').change(function () {
+                $('.semester-select').html('');
+                var option = $("#option_id").val();
 
-                    console.log(options)
+                semesterSelectValues = allSemesters.filter(function (semester) {
+                    return option == semester.option_id;
+                });
 
-                    loadSelect('option_id', options);
-                }
+                loadSelect('.semester-select', semesterSelectValues);
             });
 
 			$('.add-new-student').click(function () {
 				var row = '<tr> <td width="80%"> <select name="students[]" class="form-control select2-single"> @foreach ($students as $student) <option value="{{ $student->id }}">{{ $student->apogee_number . " / " . $student->user->full_name }}</option> @endforeach </select> </td> <td width="20%"> <button type="button"  class="mr-1 btn btn-icon-xxs btn-danger btn-remove-row btn-colner icon-button"> <i class="simple-icon-minus btn-group-icon"></i> </button> </td> </tr>';
 				$(this).parent().parent().parent().append(row);
-				$(".select2-single").select2({"width": "100%", "theme":"bootstrap"});
+                $(".select2-single").last().select2({"width": "100%", "theme":"bootstrap"});
 			});
 
             $('.add-new-semester').click(function () {
-                var row = '<tr> <td width="80%"> <select name="semesters[]" class="form-control select2-single"> @foreach ($semesters as $semester) <option value="{{ $semester->id }}">{{ $semester->name }}</option> @endforeach </select> </td> <td width="20%"> <button type="button" class="mr-1 btn btn-icon-xxs btn-danger btn-remove-row btn-colner icon-button"> <i class="simple-icon-minus btn-group-icon"></i> </button> </td> </tr>';
+                var row = '<tr> <td width="80%"> <select name="semesters[]" class="form-control semester-select select2-single"></select> </td> <td width="20%"> <button type="button" class="mr-1 btn btn-icon-xxs btn-danger btn-remove-row btn-colner icon-button"> <i class="simple-icon-minus btn-group-icon"></i> </button> </td> </tr>';
                 $(this).parent().parent().parent().append(row);
-                $(".select2-single").select2({"width": "100%", "theme":"bootstrap"});
+                loadSelect('.semester-select:last', semesterSelectValues);
             });
 
             $('body').on("click", ".btn-remove-row", function(e) {
@@ -209,13 +207,13 @@
             });
 
             // Helpers :
-			function loadSelect(tragetSelectId, items = []) {
-				var options = '';
+			function loadSelect(tragetSelectSelector, items = []) {
+				var options = '<option value="-1">----</option>';
 				for (var i = 0; i < items.length; i++) {
 					options += '<option value="' + items[i].id + '">' + items[i].name + '</option>';
 				}
 
-				$('#' + tragetSelectId).html(options);
+				$(tragetSelectSelector).html(options);
 			}
 		})
 	</script>

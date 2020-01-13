@@ -34,26 +34,51 @@
                                         <th>Contenu</th>
                                         <th></th>
                                     </tr>
-                                    <tr>
-                                        <td width="20%">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="key" id="key" value="{{ old('key') }}" placeholder="Nom">
-                                            </div>
-                                        </td>
-                                        <td width="70%">
-                                            <div class="form-group">
-                                                <textarea class="form-control" name="value" id="value" placeholder="Contenu" cols="30" rows="3">{{ old('value') }}</textarea>
-                                            </div>
-                                        </td>
-                                        <td width="10%">
-                                            <button type="button" class="mr-1 btn btn-icon-xxs btn-danger btn-remove-row btn-colner icon-button">
-                                                <i class="simple-icon-minus btn-group-icon"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-icon-xxs btn-primary btn-colner add-new-row icon-button">
-                                                <i class="simple-icon-plus btn-group-icon"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    @forelse ($settings as $settingItem)
+                                        <tr>
+                                            <td width="20%">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control key-input" name="key[]" placeholder="Nom" value="{{ $settingItem->key }}">
+                                                </div>
+                                            </td>
+                                            <td width="70%">
+                                                <div class="form-group">
+                                                    <textarea class="form-control" name="value[]" placeholder="Contenu" cols="30" rows="3">{{ $settingItem->value }}</textarea>
+                                                </div>
+                                            </td>
+                                            <td width="10%">
+                                                <button type="button" class="mr-1 btn btn-icon-xxs btn-danger btn-remove-row btn-colner icon-button">
+                                                    <i class="simple-icon-minus btn-group-icon"></i>
+                                                </button>
+                                                @if ($loop->first)
+                                                    <button type="button" class="btn btn-icon-xxs btn-primary btn-colner add-new-row icon-button">
+                                                        <i class="simple-icon-plus btn-group-icon"></i>
+                                                    </button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td width="20%">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control key-input" name="key[]" placeholder="Nom">
+                                                </div>
+                                            </td>
+                                            <td width="70%">
+                                                <div class="form-group">
+                                                    <textarea class="form-control" name="value[]" placeholder="Contenu" cols="30" rows="3"></textarea>
+                                                </div>
+                                            </td>
+                                            <td width="10%">
+                                                <button type="button" class="mr-1 btn btn-icon-xxs btn-danger btn-remove-row btn-colner icon-button">
+                                                    <i class="simple-icon-minus btn-group-icon"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-icon-xxs btn-primary btn-colner add-new-row icon-button">
+                                                    <i class="simple-icon-plus btn-group-icon"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                             <div class="mt-4"></div>
@@ -70,7 +95,7 @@
     <script>
         $(document).ready(function () {
             $('.add-new-row').click(function () {
-                var row = '<tr> <td width="20%"> <div class="form-group"> <input type="text" class="form-control" name="key" id="key" value="{{ old('key') }}" placeholder="Nom"> </div> </td> <td width="70%"> <div class="form-group"> <textarea class="form-control" name="value" id="value" placeholder="Contenu" cols="30" rows="3">{{ old('value') }}</textarea> </div> </td> <td width="10%"> <button type="button" class="mr-1 btn btn-icon-xxs btn-danger btn-remove-row btn-colner icon-button"> <i class="simple-icon-minus btn-group-icon"></i> </button> </td> </tr>';
+                var row = '<tr> <td width="20%"> <div class="form-group"> <input type="text" class="form-control key-input" name="key[]" value="" placeholder="Nom"> </div> </td> <td width="70%"> <div class="form-group"> <textarea class="form-control" name="value[]" placeholder="Contenu" cols="30" rows="3"></textarea> </div> </td> <td width="10%"> <button type="button" class="mr-1 btn btn-icon-xxs btn-danger btn-remove-row btn-colner icon-button"> <i class="simple-icon-minus btn-group-icon"></i> </button> </td> </tr>';
                 $(this).parent().parent().parent().append(row);
             });
 
@@ -80,7 +105,7 @@
                 }
             });
 
-            $('body').on("keyup", ".key-input", function(e) {
+            $('body').on("change", ".key-input", function(e) {
                 $(this).val(stringToSlug($(this).val()));
             });
 
@@ -93,8 +118,8 @@
                     str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
                 }
                 str = str.replace(/[^a-z0-9 -]/g, '')
-                    .replace(/\s+/g, '-')
-                    .replace(/-+/g, '-');
+                    .replace(/\s+/g, '_')
+                    .replace(/-+/g, '_');
                 return str;
             }
         });

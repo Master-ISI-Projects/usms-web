@@ -36,9 +36,9 @@ class StudentController extends Controller
     public function create()
     {
         return view('admin.students.create', [
-            'levels' => Level::all(['id', 'title']),
-            'subLevels' => SubLevel::all(['id', 'title', 'level_id']),
-            'classes' => Classe::all(['id', 'title', 'sub_level_id', 'scholar_year_id']),
+            'departements' => Departement::all(),
+            'options' => Option::all(),
+            'classes' => Classe::all()
         ]);
     }
 
@@ -57,8 +57,6 @@ class StudentController extends Controller
             'picture' => Helper::saveFileFromRequest($request, 'picture'),
             'tel' => $request->tel,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'visible_password' => $request->password,
             'role' => Constant::USER_ROLES['student'],
             'is_active' => $request->is_active ? true : false
         ]);
@@ -66,12 +64,11 @@ class StudentController extends Controller
         $user->student()->save(
             Student::create([
                 'birth_date' => Helper::parseDate($request->birth_date),
-                'registration_number' => $request->registration_number,
-                'address' => $request->address
+                'apogee_number' => $request->apogee_number,
             ])
         );
 
-        $user->student->classes()->attach($request->class_id);
+        $user->student->classes()->attach($request->classe_id);
 
         session()->flash('success', 'Saved');
 
@@ -101,9 +98,6 @@ class StudentController extends Controller
     {
         return view('admin.students.edit', [
             'student' => Student::findOrFail($id),
-            'levels' => Level::all(['id', 'title']),
-            'subLevels' => SubLevel::all(['id', 'title', 'level_id']),
-            'classes' => Classe::all(['id', 'title', 'sub_level_id', 'scholar_year_id']),
         ]);
     }
 
@@ -125,15 +119,12 @@ class StudentController extends Controller
             'picture' => Helper::saveFileFromRequest($request, 'picture', $student->user->picture) ?? $student->user->picture,
             'tel' => $request->tel,
             'email' => $request->email,
-            'password' => $request->password ? bcrypt($request->password) : $student->user->password,
-            'visible_password' => $request->password ? $request->password : $student->user->visible_password,
             'is_active' => $request->is_active ? true : false,
         ]);
 
         $student->update([
             'birth_date' => Helper::parseDate($request->birth_date),
-            'registration_number' => $request->registration_number,
-            'address' => $request->address
+            'apogee_number' => $request->apogee_number,
         ]);
 
         session()->flash('success', 'Updated');

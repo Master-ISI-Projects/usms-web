@@ -9,6 +9,8 @@ Route::group(['prefix' => '{currentScholarYear}', 'middleware' => 'auth'], funct
 	    Route::resource('options', 'OptionController');
 	    Route::resource('semesters', 'SemesterController');
 	    Route::resource('modules', 'ModuleController');
+	    Route::resource('exams', 'ExamController');
+	    Route::resource('marks', 'MarkController');
 	    Route::resource('news', 'NewsController');
 	    Route::resource('events', 'EventController');
 	    Route::resource('classes', 'ClasseController');
