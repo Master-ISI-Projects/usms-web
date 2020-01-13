@@ -64,7 +64,10 @@
                             <a class="nav-link text-uppercase" id="second-tab" data-toggle="tab" href="#semesters-tab" role="tab" aria-controls="second" aria-selected="false">Semestres</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-uppercase" id="second-tab" data-toggle="tab" href="#marks-tab" role="tab" aria-controls="second" aria-selected="false">Notes des étudiants</a>
+                            <a class="nav-link text-uppercase" id="3-tab" data-toggle="tab" href="#marks-tab" role="tab" aria-controls="second" aria-selected="false">Notes des étudiants</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-uppercase" id="4-tab" data-toggle="tab" href="#notifications-tab" role="tab" aria-controls="second" aria-selected="false">Notifications</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -240,6 +243,47 @@
                                         </div>
                                     </div>
                                 @endforeach
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="notifications-tab" role="tabpanel" aria-labelledby="notifications-tab">
+                            <div class="sortable-survey">
+                                <div class="sub-level">
+                                    <div class="card card-panel question d-flex mb-4 edit-quesiton">
+                                        <div class="d-flex flex-grow-1 min-width-zero">
+                                            <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+                                                <div class="list-item-heading mb-0 truncate w-80 mb-1 mt-1">
+                                                    <span class="log-indicator border-theme-1 mr-1" style="border-color: red !important"></span>
+                                                    <span class="text-uppercase">
+                                                        Notifications
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class=" pl-1 align-self-center pr-4">
+                                                <button class="btn btn-outline-theme-3 icon-button btn-add-notification">
+                                                    <i class="iconsminds-add"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="question-collapse collapse show" id="notifications-tab-content">
+                                            <div class="card-body pt-0">
+                                                <div class="border-bottom mb-3"></div>
+                                                @foreach ($classe->notifications as $notification)
+                                                    <div class="d-flex flex-row pb-3 {!! $loop->last ? '' : 'border-bottom mb-3' !!} justify-content-between align-items-center">
+                                                        <div class="pl-3 flex-fill">
+                                                            <p class="font-weight-semibold text-primary mb-0">{{ $notification->title }}</p>
+                                                            <p class="text-muted mb-3 mt-1 text-small">
+                                                                {{ $notification->content }}
+                                                            </p>
+                                                        </div>
+                                                        <div>
+                                                            <a class="btn btn-link text-success btn-xs"><i class="simple-icon-pencil"></i></a>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
