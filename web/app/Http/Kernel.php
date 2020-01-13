@@ -63,6 +63,8 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\AdminMiddlware::class,
         'student' => \App\Http\Middleware\StudentMiddlware::class,
         'teacher' => \App\Http\Middleware\TeacherMiddlware::class,
+        'jwt.auth' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+        'jwt.refresh' => \Tymon\JWTAuth\Http\Middleware\RefreshToken::class,
     ];
 
     /**

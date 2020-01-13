@@ -235,7 +235,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Constant' => App\Helpers\Constant::class,
-        'Helper' => App\Helpers\Helper::class
+        'Helper' => App\Helpers\Helper::class,
     ],
 
 ];

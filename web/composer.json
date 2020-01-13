@@ -14,7 +14,7 @@
         "laravel/tinker": "^1.0",
         "pusher/pusher-php-server": "^4.0",
         "tucker-eric/eloquentfilter": "^1.4",
-        "tymon/jwt-auth": "^1.0"
+        "tymon/jwt-auth": "~1.0.0-rc.2"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

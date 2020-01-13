@@ -4,6 +4,7 @@ namespace App\Models;
 
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use App\Helpers\Helper;
 
 /**
  * @property integer $id
@@ -67,5 +68,12 @@ class Student extends Model
         return $this->belongsToMany(Classe::class, 'registrations')
                     ->as('registrations')
                     ->withPivot('classe_id', 'student_id');
+    }
+
+    public function getCurrentClasseAttribute()
+    {
+        return $this->classes()->where(
+            'scholar_year_id', Helper::getCurrentYearId()
+        )->first();
     }
 }

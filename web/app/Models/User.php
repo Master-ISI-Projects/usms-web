@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
@@ -21,9 +22,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string $updated_at
  * @property SchoolManager[] $schoolManagers
  */
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+
     /**
      * The "type" of the auto-incrementing ID.
      *
@@ -48,6 +50,16 @@ class User extends Authenticatable
         'created_at',
         'updated_at'
     ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
