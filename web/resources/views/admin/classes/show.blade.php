@@ -127,7 +127,7 @@
                                                                 <div class="alert alert-dark mb-0">
                                                                     <span class="cursor-pointer" data-toggle="collapse" data-target="#collapse-{{ $module->id }}" aria-expanded="true" aria-controls="collapse-{{ $module->id }}">{{ $module->name }}</span>
                                                                     <span class="float-right">
-                                                                        <button class="header-icon btn btn-empty text-primary p-0 mr-2 btn-add-exam"
+                                                                        <button class="header-icon btn btn-empty text-primary p-0 btn-add-exam"
                                                                                 data-module-id="{{ $module->id }}"
                                                                                 data-module-name="{{ $module->name }}"
                                                                                 data-module-id="{{ $module->id }}"
@@ -136,32 +136,31 @@
                                                                                 type="button">
                                                                             <i class="iconsminds-add"></i>
                                                                         </button>
-                                                                        <button class="header-icon btn btn-empty text-bold text-primary p-0 btn-edit-exam"
-                                                                                data-module-id="{{ $module->id }}"
-                                                                                data-module-name="{{ $module->name }}"
-                                                                                data-module-id="{{ $module->id }}"
-                                                                                data-classe-name="{{ $classe->name }}"
-                                                                                data-classe-id="{{ $classe->id }}"
-                                                                                type="button">
-                                                                            <i class="simple-icon-settings"></i>
-                                                                        </button>
                                                                     </span>
                                                                 </div>
                                                                 <div id="collapse-{{ $module->id }}" class="collapse" data-parent="#accordion" style="">
                                                                     <ul class="list-group b-rad-0">
                                                                         @foreach ($classe->examsByModuleId($module->id)->get() as $exam)
                                                                             <li class="list-group-item">
-                                                                                <span>{{ $exam->name }}</span>
-                                                                                <span class="float-right">
-                                                                                    <button class="header-icon btn btn-empty text-danger p-0 btn-edit-exam"
-                                                                                            data-exam-id="{{ $exam->id }}"
-                                                                                            data-exam-name="{{ $exam->name }}"
-                                                                                            data-exam-url-update="{{ route('exams.update', ['id' => $exam->id]) }}"
-                                                                                            data-exam-url-delete="{{ route('exams.destroy', ['id' => $exam->id]) }}"
-                                                                                            type="button">
-                                                                                        {{-- <i class="simple-icon-settings"></i> --}}
-                                                                                    </button>
-                                                                                </span>
+                                                                                <div class="row">
+                                                                                    <span class="col-md-3"><b>{{ $exam->name }}</b></span>
+                                                                                    <span class="col-md-3"><b>Durée</b>: {{ $exam->duration }}</span>
+                                                                                    <span class="col-md-2"><b>Type</b>: {{ $exam->type }}</span>
+                                                                                    <span class="col-md-3"><b>Session</b>: {{ $exam->session }}</span>
+                                                                                    <span class="col-md-1">
+                                                                                        <button class="header-icon btn btn-empty text-danger p-0 btn-edit-exam"
+                                                                                                data-exam-id="{{ $exam->id }}"
+                                                                                                data-exam-name="{{ $exam->name }}"
+                                                                                                data-exam-type="{{ $exam->type }}"
+                                                                                                data-exam-duration="{{ $exam->duration }}"
+                                                                                                data-exam-session="{{ $exam->session }}"
+                                                                                                data-exam-url-update="{{ route('exams.update', ['id' => $exam->id]) }}"
+                                                                                                data-exam-url-delete="{{ route('exams.destroy', ['id' => $exam->id]) }}"
+                                                                                                type="button">
+                                                                                            <i class="simple-icon-settings"></i>
+                                                                                        </button>
+                                                                                    </span>
+                                                                                </div>
                                                                             </li>
                                                                         @endforeach
                                                                     </ul>
@@ -198,47 +197,50 @@
                                             <div class="question-collapse collapse" id="tab-marks-{{ $student->id }}">
                                                 <div class="card-body pt-0">
                                                    <div id="accordion">
-                                                        @foreach ($semester->modules as $module)
-                                                            <div class="border mb-2">
-                                                                <div class="alert alert-danger mb-0">
-                                                                    <span class="cursor-pointer" data-toggle="collapse" data-target="#collapse-marks-{{ $module->id . $student->id }}" aria-expanded="true" aria-controls="collapse-marks-{{ $module->id . $student->id }}">{{ $module->name }}</span>
-                                                                </div>
-                                                                <div id="collapse-marks-{{ $module->id . $student->id }}" class="collapse" data-parent="#accordion" style="">
-                                                                    <form action="{{ route('marks.store') }}" method="post">
-                                                                        @csrf
-                                                                        <input type="hidden" name="classe_id" value="{{ $classe->id }}">
-                                                                        <input type="hidden" name="module_id" value="{{ $module->id }}">
-                                                                        <ul class="list-group b-rad-0">
-                                                                            @foreach ($module->exams as $exam)
-                                                                            <input type="hidden" name="exam_id" value="{{ $exam->id }}">
+                                                        @foreach ($classe->semesters as $semester)
+                                                            <h3 class="border-bottom mb-3 {!! $loop->first ? '' : 'mt-4' !!}">Notes la semestre : {{ $semester->name }}</h3>
+                                                            @foreach ($semester->modules as $module)
+                                                                <div class="border mb-2">
+                                                                    <div class="alert alert-danger mb-0">
+                                                                        <span class="cursor-pointer" data-toggle="collapse" data-target="#collapse-marks-{{ $module->id . $student->id }}" aria-expanded="true" aria-controls="collapse-marks-{{ $module->id . $student->id }}">{{ $module->name }}</span>
+                                                                    </div>
+                                                                    <div id="collapse-marks-{{ $module->id . $student->id }}" class="collapse" data-parent="#accordion" style="">
+                                                                        <form action="{{ route('marks.store') }}" method="post">
+                                                                            @csrf
+                                                                            <input type="hidden" name="classe_id" value="{{ $classe->id }}">
+                                                                            <input type="hidden" name="module_id" value="{{ $module->id }}">
+                                                                            <ul class="list-group b-rad-0">
+                                                                                @foreach ($module->exams as $exam)
+                                                                                <input type="hidden" name="exam_id" value="{{ $exam->id }}">
+                                                                                    <li class="list-group-item">
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-4 pt-2">
+                                                                                                <b>{{ $exam->name }}</b>
+                                                                                            </div>
+                                                                                            <div class="col-md-8">
+                                                                                                <input type="text" class="form-control" name="marks[]" placeholder=" Note ...">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                @endforeach
                                                                                 <li class="list-group-item">
                                                                                     <div class="row">
                                                                                         <div class="col-md-4 pt-2">
-                                                                                            <b>{{ $exam->name }}</b>
+                                                                                            <b class="text-danger">Note de module</b>
                                                                                         </div>
                                                                                         <div class="col-md-8">
-                                                                                            <input type="text" class="form-control" name="marks[]" placeholder=" Note ...">
+                                                                                            <input type="text" class="form-control" name="general_note" placeholder=" Note de module ...">
                                                                                         </div>
                                                                                     </div>
                                                                                 </li>
-                                                                            @endforeach
-                                                                            <li class="list-group-item">
-                                                                                <div class="row">
-                                                                                    <div class="col-md-4 pt-2">
-                                                                                        <b class="text-danger">Note de module</b>
-                                                                                    </div>
-                                                                                    <div class="col-md-8">
-                                                                                        <input type="text" class="form-control" name="general_note" placeholder=" Note de module ...">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                            <li class="list-group-item">
-                                                                                <button class="btn default btn-danger float-right">Enregistrer</button>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </form>
+                                                                                <li class="list-group-item">
+                                                                                    <button class="btn default btn-danger float-right">Enregistrer</button>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </form>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                            @endforeach
                                                         @endforeach
                                                     </div>
                                                 </div>
@@ -378,6 +380,60 @@
     </div>
 </div>
 
+<div class="modal" id="modal-edit-exam" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form method="post">
+                @csrf
+                @method('PUT')
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Edite Exam</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name">Examen</label>
+                        <input type="text" required class="form-control" name="name" id="name" placeholder="Examen">
+                    </div>
+                    <div class="form-group">
+                        <label for="duration">Durée</label>
+                        <input type="text" required class="form-control" name="duration" id="duration" placeholder="Durée">
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <select name="type" class="form-control" id="type">
+                            @foreach (Constant::EXAM_TYPES as $type)
+                                <option {{ old('type') == $type ? 'selected' : '' }} value="{{ $type }}">{{ $type }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="session">Session</label>
+                        <select name="session" class="form-control" id="session">
+                            @foreach (Constant::EXAM_SESSIONS as $session)
+                                <option {{ old('session') == $session ? 'selected' : '' }} value="{{ $session }}">{{ $session }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <input type="hidden" required name="module_id" id="module_id">
+                    <input type="hidden" required name="classe_id" id="classe_id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-confirmation-message="Voulez vous vraiment supprimer ?" data-form-id="form-delete-exam" id="btn-delete-exam" class="btn btn-sm btn-outline-danger mr-auto btn-delete-resource redirect-after-confirmation">Supprimer</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button class="btn btn-sm btn-primary">Enregistrer</button>
+                </div>
+            </form>
+            <form id="form-delete-exam" method="post">
+                @csrf
+                @method('DELETE')
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="modal" id="modal-add-notification" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -474,6 +530,18 @@
                 modal.find('#module_id').val($(this).data('module-id'));
                 modal.find('#module_name').text($(this).data('module-name'));
                 modal.find('#classe_id').val($(this).data('classe-id'));
+                modal.modal();
+            });
+
+            $('.btn-edit-exam').click(function () {
+                var modal = $('#modal-edit-exam');
+                modal.find('#modal-title').text('Examen: ' + $(this).data('exam-name'));
+                modal.find('#name').val($(this).data('exam-name'));
+                modal.find('#type').val($(this).data('exam-type'));
+                modal.find('#duration').val($(this).data('exam-duration'));
+                modal.find('#session').val($(this).data('exam-session'));
+                modal.find('form').attr('action', $(this).data('exam-url-update'));
+                modal.find('#form-delete-exam').attr('action', $(this).data('exam-url-delete'));
                 modal.modal();
             });
         });

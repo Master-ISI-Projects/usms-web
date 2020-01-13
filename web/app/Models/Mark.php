@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $exam_id
  * @property integer $student_id
  * @property float $mark
- * @property string $session
  * @property string $created_at
  * @property string $updated_at
  * @property Exam $exam
@@ -31,7 +30,6 @@ class Mark extends Model
         'exam_id',
         'student_id',
         'mark',
-        'session',
         'created_at',
         'updated_at'
     ];

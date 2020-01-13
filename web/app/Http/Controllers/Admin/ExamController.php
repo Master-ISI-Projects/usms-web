@@ -37,7 +37,7 @@ class ExamController extends Controller
         $module = Exam::findOrfail($id);
 
         $module->update(
-            $request->only('name')
+            $request->only('name', 'type', 'session', 'duration')
         );
 
         session()->flash('success', 'Updated');

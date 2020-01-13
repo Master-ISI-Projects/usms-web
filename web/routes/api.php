@@ -20,6 +20,7 @@ Route::group([
 ], function() {
     Route::get('events', 'EventController@index');
     Route::get('news', 'NewsController@index');
+    Route::get('notifications', 'NotificationController@index');
 });
 
 Route::group([
