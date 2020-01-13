@@ -19,6 +19,8 @@ Route::group(['prefix' => '{currentScholarYear}', 'middleware' => 'auth'], funct
 	    Route::resource('students', 'StudentController');
 	    Route::resource('teachers', 'TeacherController');
 	    Route::resource('admins', 'AdminController');
+	    Route::delete('attachements/{id}', 'AttachementController@destroy')->name('attachements.delete');
+	    Route::post('classes/{id}/save-attachement', 'ClasseController@saveAttachement')->name('classes.save_attachement');
 
 	    Route::resource('settings', 'SettingController');
 	    // Pages

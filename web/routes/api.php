@@ -21,6 +21,7 @@ Route::group([
     Route::get('events', 'EventController@index');
     Route::get('news', 'NewsController@index');
     Route::get('notifications', 'NotificationController@index');
+    Route::get('attachements', 'AttachementController@index');
 });
 
 Route::group([

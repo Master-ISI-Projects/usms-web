@@ -70,7 +70,7 @@
                             <a class="nav-link text-uppercase" id="4-tab" data-toggle="tab" href="#notifications-tab" role="tab" aria-controls="second" aria-selected="false">Notifications</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-uppercase" id="4-tab" data-toggle="tab" href="#attachements-tab" role="tab" aria-controls="second" aria-selected="false">Attachements</a>
+                            <a class="nav-link text-uppercase" id="4-tab" data-toggle="tab" href="#attachements-tab" role="tab" aria-controls="second" aria-selected="false">Documents Attachées</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -218,7 +218,7 @@
                                                                                                 <b>{{ $exam->name }}</b>
                                                                                             </div>
                                                                                             <div class="col-md-8">
-                                                                                                <input type="text" class="form-control" name="marks[]" placeholder=" Note ...">
+                                                                                                <input type="text" class="form-control" name="marks[]" placeholder="Note ...">
                                                                                             </div>
                                                                                         </div>
                                                                                     </li>
@@ -229,7 +229,7 @@
                                                                                             <b class="text-danger">Note de module</b>
                                                                                         </div>
                                                                                         <div class="col-md-8">
-                                                                                            <input type="text" class="form-control" name="general_note" placeholder=" Note de module ...">
+                                                                                            <input type="text" class="form-control" name="general_note" placeholder="Note de module ...">
                                                                                         </div>
                                                                                     </div>
                                                                                 </li>
@@ -257,7 +257,6 @@
                                         <div class="d-flex flex-grow-1 min-width-zero">
                                             <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
                                                 <div class="list-item-heading mb-0 truncate w-80 mb-1 mt-1">
-                                                    <span class="log-indicator border-theme-1 mr-1" style="border-color: red !important"></span>
                                                     <span class="text-uppercase">
                                                         Notifications
                                                     </span>
@@ -318,6 +317,57 @@
                                                         </div>
                                                     </div>
                                                 @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="attachements-tab" role="tabpanel" aria-labelledby="attachements-tab">
+                            <div class="sortable-survey">
+                                <div class="sub-level">
+                                    <div class="card card-panel question d-flex mb-4 edit-quesiton">
+                                        <div class="d-flex flex-grow-1 min-width-zero">
+                                            <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+                                                <div class="list-item-heading mb-0 truncate w-80 mb-1 mt-1">
+                                                    <span class="text-uppercase">
+                                                        Documents Attachées
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class=" pl-1 align-self-center pr-4">
+                                                <button class="btn btn-outline-theme-3 icon-button" data-toggle="modal" data-target="#modal-add-document">
+                                                    <i class="iconsminds-add"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="question-collapse collapse show" id="attachements-tab-content">
+                                            <div class="card-body">
+                                                <div class="scroll ps ps--active-y" style="max-height: 200px">
+                                                    @forelse ($classe->attachements as $file)
+                                                        <div class="d-flex flex-row pb-3 justify-content-between {!! $loop->last ?: 'border-bottom mb-3' !!}">
+                                                            <div class="flex-grow-1">
+                                                                <a href="{{ asset('storage/' . $file->url) }}" data-document-url="{{ asset('storage/' . $file->url) }}" data-document-name="{{ $file->name }}" class="btn-show-document">
+                                                                    <p class="font-weight-medium mb-0">
+                                                                        <i class="simple-icon-doc text-primary"></i>
+                                                                        &nbsp; {{ $file->name }}
+                                                                    </p>
+                                                                </a>
+                                                            </div>
+                                                            <div class="comment-likes">
+                                                                <form method="post" action="{{ route('attachements.delete', ['id' => $file->id]) }}">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <span data-confirmation-message="Voulez vous vraiment supprimer ce document ?" class="post-icon pointer-cursor btn-delete-file btn-delete-resource redirect-after-confirmation">
+                                                                        <i class="simple-icon-trash text-danger ml-2"></i>
+                                                                    </span>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    @empty
+                                                        <p class="text-center">Aucune documents...</p>
+                                                    @endforelse
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -501,6 +551,55 @@
         </div>
     </div>
 </div>
+
+<div class="modal" id="modal-show-document" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header p-1rem">
+                <h5 class="modal-title" id="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-1rem">
+
+            </div>
+            <div class="modal-footer p-1rem">
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modal-add-document" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form method="post" action="{{ route('classes.save_attachement', ['id' => $classe->id]) }}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Ajouter un document</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name">Nom</label>
+                        <input type="text" required class="form-control" name="name" placeholder="Nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Document</label>
+                        <input type="file" required class="form-control" name="classe_attachement">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button class="btn btn-sm btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('custom-stylesheet')
@@ -543,6 +642,15 @@
                 modal.find('form').attr('action', $(this).data('exam-url-update'));
                 modal.find('#form-delete-exam').attr('action', $(this).data('exam-url-delete'));
                 modal.modal();
+            });
+
+            $('.btn-show-document').click(function (event) {
+                event.preventDefault($(this).data('document-url'));
+                console.log()
+                $('#modal-show-document #modal-name').text($(this).data('document-name'));
+                $('#modal-show-document #pdf-viewer').attr('data', $(this).data('document-url'));
+                $('#modal-show-document .modal-body').html('<object type="application/pdf" id="pdf-viewer" data="' + $(this).data('document-url') + '" width="100%" style="height: 60vh;">No Support</object>');
+                $('#modal-show-document').modal();
             });
         });
     </script>

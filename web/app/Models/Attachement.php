@@ -34,4 +34,13 @@ class Attachement extends Model
     {
         return $this->belongsTo(Classe::class, 'classe_id');
     }
+
+    /**
+     * Get the image path of Attachement
+     *
+     * @return string
+     */
+    public function getPathAttribute() {
+        return asset('storage/' . $this->url);
+    }
 }

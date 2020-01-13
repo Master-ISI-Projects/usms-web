@@ -18,16 +18,7 @@ class AuthController extends Controller
                             ->first();
 
         if($student && $token = JWTAuth::fromUser($student->user)) {
-            $user = [
-                'id' => $student->id,
-                'firstName' => $student->user->first_name,
-                'lastName' => $student->user->last_name,
-                'classeId' => optional($student->currentClasse)->id ?? '##',
-                'classeName' => optional($student->currentClasse)->name ?? '##',
-                'token' => $token,
-            ];
-
-            return response()->json($user, 200);
+            return response()->json(StudentResource::make($student), 200);
         }
 
         return response()->json([

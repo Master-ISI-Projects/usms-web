@@ -7,6 +7,7 @@ use App\Helpers\Helper;
 use App\Models\Student;
 use App\Models\Option;
 use App\Models\Semester;
+use App\Models\Attachement;
 use App\Helpers\Constant;
 use App\Models\ScholarYear;
 use App\Models\Departement;
@@ -87,10 +88,6 @@ class ClasseController extends Controller
             }
         }
 
-        dump($classe);
-        dump($classe->semesters);
-        dd($classe->students);
-
         session()->flash('success', 'Saved');
 
         return redirect()->route('classes.index');
@@ -148,6 +145,22 @@ class ClasseController extends Controller
         $classe->delete();
 
         session()->flash('success', 'Deleted');
+
+        return redirect()->back();
+    }
+
+    public function saveAttachement(Request $request, $id)
+    {
+        $classe = Classe::findOrFail($id);
+
+        $file = $classe->attachements()->save(
+            Attachement::create([
+                'name' => $request->name,
+                'url' => Helper::saveFileFromRequest($request, 'classe_attachement', null, 'classe_documents')
+            ])
+        );
+
+        session()->flash('success', 'Saved');
 
         return redirect()->back();
     }

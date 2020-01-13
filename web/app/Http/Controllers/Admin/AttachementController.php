@@ -37,8 +37,6 @@ class AttachementController extends Controller
     {
         $attachement = Attachement::findOrFail($id);
 
-        Helper::removeFile($attachement->url);
-
         $attachement->delete();
 
         session()->flash('success', 'Deleted');
