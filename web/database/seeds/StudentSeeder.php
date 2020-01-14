@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Models\Teacher;
+use App\Models\Student;
 use App\Helpers\Constant;
 use Faker\Factory;
 
@@ -29,10 +29,10 @@ class StudentSeeder extends Seeder
                 'role' => Constant::USER_ROLES['student']
             ]);
 
-            $user->teacher()->save(
-                Teacher::create([
+            $user->student()->save(
+                Student::create([
                     'apogee_number' => mt_rand(1000, 5000),
-                    'birth_date' => $faker->dateTimeThisCentury->format('Y-m-d'),
+                    'birth_date' => \Carbon\Carbon::now()->subYears(rand(19, 25)),
                 ])
             );
         }

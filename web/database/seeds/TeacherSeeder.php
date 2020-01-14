@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Teacher;
+use App\Models\Departement;
 use App\Helpers\Constant;
 use Faker\Factory;
 
@@ -16,24 +17,28 @@ class TeacherSeeder extends Seeder
     public function run()
     {
     	$faker = Factory::create();
+        $departements = Departement::all();
 
-    	for ($i=0; $i < 20; $i++) {
-	        $user = User::create([
-	            'first_name' => $faker->firstname,
-	            'last_name' => $faker->lastname,
-	            'gender' => Constant::USERS_GENDERS[mt_rand(0, (count(Constant::USERS_GENDERS)) - 1)],
-	            'tel' => $faker->phoneNumber,
-	            'email' => $faker->unique()->safeEmail,
-	            'password' => bcrypt('123456789'),
-	            'is_active' =>  mt_rand(0, 1),
-	            'role' => Constant::USER_ROLES['teacher']
-	        ]);
+        foreach ($departements as $key => $departement) {
+            for ($i=0; $i < 20; $i++) {
+                $user = User::create([
+                    'first_name' => $faker->firstname,
+                    'last_name' => $faker->lastname,
+                    'gender' => Constant::USERS_GENDERS[mt_rand(0, (count(Constant::USERS_GENDERS)) - 1)],
+                    'tel' => $faker->phoneNumber,
+                    'email' => $faker->unique()->safeEmail,
+                    'password' => bcrypt('123456789'),
+                    'is_active' =>  mt_rand(0, 1),
+                    'role' => Constant::USER_ROLES['teacher']
+                ]);
 
-	        $user->teacher()->save(
-	            Teacher::create([
-	                'birth_date' => $faker->dateTimeThisCentury->format('Y-m-d'),
-	            ])
-	        );
-    	}
+                $user->teacher()->save(
+                    Teacher::create([
+                        'birth_date' => $faker->dateTimeThisCentury->format('Y-m-d'),
+                        'departement_id' => $departement->id,
+                    ])
+                );
+            }
+        }
     }
 }

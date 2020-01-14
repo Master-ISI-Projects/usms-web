@@ -28,7 +28,7 @@ class PagesController extends Controller
     	$countTeachers = $this->statisticService->getCountTeachers();
     	$countAdmins = $this->statisticService->getCountAdmins();
         $eventsOfCurrentYear = Event::currentYear()->latest()->get();
-        $newsOfCurrentYear = News::currentYear()->latest()->limit(4)->get();
+        $newsOfCurrentYear = News::currentYear()->latest()->limit(3)->get();
 
         return view('admin.pages.dashboard', [
     		'countStudentInCurrentYear' => $countStudentInCurrentYear,

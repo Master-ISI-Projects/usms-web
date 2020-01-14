@@ -29,9 +29,9 @@
         </div> --}}
     </div>
 
-    <a class="navbar-logo">
+    {{-- <a class="navbar-logo">
         <img src="{{ asset('assets/img/logo.png') }}" alt="">
-    </a>
+    </a> --}}
 
     <div class="navbar-right">
             <div class="header-icons d-inline-block align-middle">

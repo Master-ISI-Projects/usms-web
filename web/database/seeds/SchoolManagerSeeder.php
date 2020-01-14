@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Faker\Factory;
 use App\Models\User;
+use App\Models\SchoolManager;
 
 class SchoolManagerSeeder extends Seeder
 {
@@ -15,7 +16,7 @@ class SchoolManagerSeeder extends Seeder
     {
     	$faker = Factory::create();
 
-    	for ($i=0; $i < 50; $i++) {
+    	for ($i=0; $i < 5; $i++) {
 	        $user = User::create([
 	            'first_name' => $faker->firstname,
 	            'last_name' => $faker->lastname,
@@ -23,10 +24,13 @@ class SchoolManagerSeeder extends Seeder
 	            'tel' => $faker->phoneNumber,
 	            'email' => $faker->unique()->safeEmail,
 	            'password' => bcrypt('123456789'),
-	            'visible_password' => '123456789',
 	            'is_active' =>  mt_rand(0, 1),
-	            'role' => Constant::USER_ROLES['school_manager']
+	            'role' => Constant::USER_ROLES['admin']
 	        ]);
+
+            $user->schoolManager()->save(
+                SchoolManager::create()
+            );
     	}
     }
 }
