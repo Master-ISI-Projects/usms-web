@@ -23,7 +23,7 @@
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('home') }}">Tableau de board</a>
+                            <a href="{{ url('/') }}">Tableau de board</a>
                         </li>
                         <li class="breadcrumb-item">
                             <a href="{{ route('students.index') }}">Etudiants</a>
@@ -52,18 +52,6 @@
                             <p class="mb-4 text-center">
                                 {!! $student->user->is_active_badge !!}
                             </p>
-                            <div class="separator"></div>
-                            <p class="text-muted text-small mb-2 mt-2">N° de l'etudiant</p>
-                            <p class="mb-2">{{ $student->registration_number }}</p>
-                            <div class="separator"></div>
-                            <p class="text-muted text-small mb-2 mt-2">Niveau scolaire</p>
-                            <p class="mb-2">{!! optional($student->currentLevel)->title ?? '<span class="text-danger">###</span>' !!} / {!! optional($student->currentSubLevel)->title ?? '<span class="text-danger">###</span>' !!}</p>
-                            <div class="separator"></div>
-                            <p class="text-muted text-small mb-2 mt-2">Classe</p>
-                            <p class="mb-2">{!! optional($student->currentClasse)->title ?? '<span class="text-danger">###</span>' !!}</p>
-                            <div class="separator"></div>
-                            <p class="text-muted text-small mb-2 mt-2">Annee scolaire</p>
-                            <p class="mb-0">{!! optional(optional($student->currentClasse)->scholarYear)->scholar_year ?? '<span class="text-danger">###</span>' !!}</p>
                         </div>
                     </div>
                 </div>
@@ -84,16 +72,35 @@
                             <div class="row mb-3">
                                 <div class="card w-100">
                                     <div class="card-body">
-                                        <h5>Informations personnel</h5>
+                                        <h5>Informatiions academique</h5>
                                         <div class="separator mb-4"></div>
-                                        <table class="table table-bordered table-show mb-0"> 
+                                        <table class="table table-bordered table-show mb-0">
+                                            <tr>
+                                                <th class="bg-gray">Code d'Apogee</th>
+                                                <td>{{ $student->apogee_number }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="bg-gray">Niveau scolaire</th>
+                                                <td>{!! optional(optional($student->currentClasse)->option)->name ?? '<span class="text-danger">###</span>' !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="bg-gray">Classe</th>
+                                                <td>{!! optional($student->currentClasse)->name ?? '<span class="text-danger">###</span>' !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="bg-gray">Annee scolaire</th>
+                                                <td>{!! optional(optional($student->currentClasse)->scholarYear)->scholar_year ?? '<span class="text-danger">###</span>' !!}</td>
+                                            </tr>
+                                        </table>
+                                        <div class="separator mb-4"></div>
+                                        <table class="table table-bordered table-show mb-0">
                                             <tr>
                                                 <th class="bg-gray">Civilité</th>
                                                 <td>{!! $student->user->gender_badge !!}</td>
                                             </tr>
                                             <tr>
                                                 <th class="bg-gray">N° de l'etudiant</th>
-                                                <td>{{ $student->registration_number }}</td>
+                                                <td>{{ $student->apogee_number }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="bg-gray">Prénom & Nom</th>
@@ -106,28 +113,6 @@
                                             <tr>
                                                 <th class="bg-gray">N° Tel</th>
                                                 <td>{{ $student->user->tel }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="bg-gray">Adresse</th>
-                                                <td>{{ $student->address }}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="card w-100">
-                                    <div class="card-body">
-                                        <h5>Accès à la plateforme</h5>
-                                        <div class="separator mb-4"></div>
-                                        <table class="table table-bordered table-show mb-0"> 
-                                            <tr>
-                                                <th class="bg-gray">E-mail</th>
-                                                <td>{{ $student->user->email }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="bg-gray">Mot de passe</th>
-                                                <td>{{ $student->user->visible_password }}</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -144,8 +129,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Année scolaire</th>
-                                                    <th>Niveau</th>
-                                                    <th>Section</th>
+                                                    <th>Option</th>
                                                     <th>Classe</th>
                                                 </tr>
                                             </thead>
@@ -153,9 +137,8 @@
                                                 @forelse ($student->classes as $classe)
                                                     <tr>
                                                         <td>{{ $classe->scholarYear->scholar_year }}</td>
-                                                        <td>{{ $classe->subLevel->level->title }}</td>
-                                                        <td>{{ $classe->subLevel->title }}</td>
-                                                        <td>{{ $classe->title }}</td>
+                                                        <td>{{ $classe->option->name }}</td>
+                                                        <td>{{ $classe->name }}</td>
                                                     </tr>
                                                 @empty
                                                     <tr>

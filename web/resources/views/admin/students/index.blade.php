@@ -26,16 +26,13 @@
                                         <p class="list-item-heading mb-1 truncate">{{ $student->user->full_name }}</p>
                                     </a>
                                     <p class="mb-1 text-small text-muted text-center w-15 w-sm-100">
-                                        {{ $student->registration_number }}
+                                        {{ $student->apogee_number }}
+                                    </p>
+                                    <p class="mb-1 text-small text-muted text-center w-20 w-sm-100">
+                                        {!! optional($student->currentClasse)->name ?? '<span class="text-danger">###</span>' !!}
                                     </p>
                                     <p class="mb-1 text-small text-muted text-center w-15 w-sm-100">
-                                        {!! '<span class="text-danger">###</span>' !!}
-                                    </p>
-                                    <p class="mb-1 text-small text-muted text-center w-15 w-sm-100">
-                                        {!! '<span class="text-danger">###</span>' !!}
-                                    </p>
-                                    <p class="mb-1 text-small text-muted text-center w-15 w-sm-100">
-                                        {!! '<span class="text-danger">###</span>' !!}
+                                        {!! optional(optional($student->currentClasse)->option)->name ?? '<span class="text-danger">###</span>' !!}
                                     </p>
                                     <div class="text-center w-15 w-sm-100">
                                         {!! $student->user->is_active_badge !!}
@@ -83,7 +80,7 @@
                         <select name="departement_id" class="form-control departement_id select2" id="departement_id">
                             <option value="-1">-- Tout --</option>
                             @foreach ($departements as $departement)
-                                <option value="{{ $departement->id }}">{{ $departement->title }}</option>
+                                <option value="{{ $departement->id }}">{{ $departement->name }}</option>
                             @endforeach
                         </select>
                     </div>

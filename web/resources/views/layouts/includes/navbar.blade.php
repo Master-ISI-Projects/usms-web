@@ -29,6 +29,10 @@
         </div> --}}
     </div>
 
+    <a class="navbar-logo">
+        <img src="{{ asset('assets/img/logo.png') }}" alt="">
+    </a>
+
     <div class="navbar-right">
             <div class="header-icons d-inline-block align-middle">
                 @if (auth()->user()->role == Constant::USER_ROLES['admin'])
@@ -38,7 +42,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
                             @foreach ($allScholarYears as $scholarYear)
-                                <a href="{{ Helper::switchScholarYearRoute($scholarYear->scholar_year) }}" 
+                                <a href="{{ Helper::switchScholarYearRoute($scholarYear->scholar_year) }}"
                                     class="dropdown-item {{ $scholarYear->scholar_year == config('scholaryear.current_scholar_year') ? 'active' : '' }}">{{ $scholarYear->scholar_year }}</a>
                             @endforeach
                         </div>

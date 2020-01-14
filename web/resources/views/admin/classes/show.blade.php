@@ -647,6 +647,7 @@
             $('.btn-show-document').click(function (event) {
                 event.preventDefault($(this).data('document-url'));
                 console.log()
+                $('#modal-title').text($(this).data('document-name'));
                 $('#modal-show-document #modal-name').text($(this).data('document-name'));
                 $('#modal-show-document #pdf-viewer').attr('data', $(this).data('document-url'));
                 $('#modal-show-document .modal-body').html('<object type="application/pdf" id="pdf-viewer" data="' + $(this).data('document-url') + '" width="100%" style="height: 60vh;">No Support</object>');

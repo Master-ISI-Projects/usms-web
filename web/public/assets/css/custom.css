@@ -131,3 +131,8 @@ input[type="color" i] {
 .d-contents {
     display: contents;
 }
+
+.navbar-logo img {
+    height: 59px;
+    margin-top: -10px;
+}

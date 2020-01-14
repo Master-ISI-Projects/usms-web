@@ -17,7 +17,7 @@ class StudentResource extends JsonResource
         return [
             'id' => $this->id,
             'firstName' => $this->user->first_name,
-            'lastName' => $this->last_name,
+            'lastName' => $this->user->last_name,
             'classeId' => optional($this->current_classe)->id ?? '##',
             'classeName' => optional($this->current_classe)->name ?? '##',
             'token' => \JWTAuth::fromUser($this->user),

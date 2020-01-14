@@ -18,8 +18,6 @@ Route::group([
     'middleware' => 'jwt.auth',
     'prefix' => 'v1'
 ], function() {
-    Route::get('events', 'EventController@index');
-    Route::get('news', 'NewsController@index');
     Route::get('notifications', 'NotificationController@index');
     Route::get('attachements', 'AttachementController@index');
 });
@@ -28,6 +26,8 @@ Route::group([
     'namespace' => 'API\V1',
     'prefix' => 'v1'
 ], function() {
+    Route::get('events', 'EventController@index');
+    Route::get('news', 'NewsController@index');
     Route::get('login', 'AuthController@login');
 });
 
