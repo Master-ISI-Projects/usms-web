@@ -2,6 +2,8 @@
 
 Auth::routes();
 
+Route::get('dashboard', 'PagesController@dashboard')->name('admin.dashboard');
+
 Route::group(['prefix' => '{currentScholarYear}', 'middleware' => 'auth'], function() {
 	// Administration area routes
 	Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() {
