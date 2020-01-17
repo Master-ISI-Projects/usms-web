@@ -25,4 +25,4 @@ using your physical phone both computer & phone must use same wifi etc.
 <img src="https://github.com/Master-ISI-Projects/usms-web/blob/master/screenShots/dashboard.jpg" />
 <img src="https://github.com/Master-ISI-Projects/usms-web/blob/master/screenShots/department.jpg" />
 
-***More :*** For more images check this folder inside the repo: [ScreenShots](https://github.com/Master-ISI-Projects/usms-web/tree/master/screenShots)
+***More :*** For more images check this folder inside the repo: [ScreenShots](https://github.com/Master-ISI-Projects/usms-web/tree/master/screenShots) also you can check [mobile application](https://github.com/Master-ISI-Projects/usms-mobile)
