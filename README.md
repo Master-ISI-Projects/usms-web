@@ -19,6 +19,45 @@ To setup the app you can follow those steps :
  ***Note :***	Make sure you're connected from same INTERNET source for example if you're using WIFI and testing the app
 using your physical phone both computer & phone must use same wifi etc.
 
+## Contributors
+
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/mouadziani">
+          <img width="150" height="150" src="https://github.com/mouadziani.png?v=3&s=150">
+          </br>
+          Mouad ZIANI
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/ELATTARIYassine">
+          <img width="150" height="150" src="https://github.com/ELATTARIYassine.png?v=3&s=150">
+          </br>
+          Yassine ELATTARI
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/TahaOmarNAJAH">
+          <img width="150" height="150" src="https://github.com/TahaOmarNAJAH.png?v=3&s=150">
+          </br>
+          Taha Omar NAJAH
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/kadd0ury">
+          <img width="150" height="150" src="https://github.com/kadd0ury.png?v=3&s=150">
+          </br>
+          Kamal KADDOURY
+        </a>
+      </td>
+    </tr>
+  <tbody>
+</table>
+
+
 # Screenshots :
 
 <img src="https://github.com/Master-ISI-Projects/usms-web/blob/master/screenShots/admin_auth.jpg" />
