@@ -40,8 +40,8 @@ using your physical phone both computer & phone must use same wifi etc.
         </a>
       </td>
       <td align="center">
-        <a href="https://github.com/TahaOmarNAJAH">
-          <img width="150" height="150" src="https://github.com/TahaOmarNAJAH.png?v=3&s=150">
+        <a href="https://github.com/najahto">
+          <img width="150" height="150" src="https://github.com/najahto.png?v=3&s=150">
           </br>
           Taha Omar NAJAH
         </a>
